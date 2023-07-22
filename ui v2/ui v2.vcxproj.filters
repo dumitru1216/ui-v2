@@ -15,12 +15,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="entry\init_main.hpp">
+    <ClInclude Include="entry\c_main.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hooking\c_hooks.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="entry\cpp\init_main.cpp">
+    <ClCompile Include="entry\cpp\c_main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hooking\cpp\c_hooks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

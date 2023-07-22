@@ -127,10 +127,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="entry\init_main.hpp" />
+    <ClInclude Include="entry\c_main.hpp" />
+    <ClInclude Include="hooking\c_hooks.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="entry\cpp\init_main.cpp" />
+    <ClCompile Include="entry\cpp\c_main.cpp" />
+    <ClCompile Include="hooking\cpp\c_hooks.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
