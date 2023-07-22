@@ -36,3 +36,10 @@
 *.db-wal
 *.lock
 *.db
+*.ipch
+*.tlog
+*.iobj
+*.log
+*.recipe
+*.ipdb
+*.pdb

@@ -4,7 +4,12 @@
 namespace sdk {
 	using c_str = std::string;
 	using c_str_vec = std::vector<std::string>;
+
+	/* client funcs */
 	using c_funcion = void;
+	using c_hwnd = HWND;
+	using c_device_x = LPDIRECT3D9;
+	using c_device = LPDIRECT3DDEVICE9;
 
 	/* math */
 	namespace math {
