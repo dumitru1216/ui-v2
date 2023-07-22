@@ -21,12 +21,21 @@
     <ClInclude Include="hooking\c_hooks.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="c_includes.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\c_sdk.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="entry\cpp\c_main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="hooking\cpp\c_hooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdk\cpp\c_sdk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

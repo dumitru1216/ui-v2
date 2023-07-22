@@ -129,10 +129,13 @@
   <ItemGroup>
     <ClInclude Include="entry\c_main.hpp" />
     <ClInclude Include="hooking\c_hooks.hpp" />
+    <ClInclude Include="c_includes.hpp" />
+    <ClInclude Include="sdk\c_sdk.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="entry\cpp\c_main.cpp" />
     <ClCompile Include="hooking\cpp\c_hooks.cpp" />
+    <ClCompile Include="sdk\cpp\c_sdk.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
