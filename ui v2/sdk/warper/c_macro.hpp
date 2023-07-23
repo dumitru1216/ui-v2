@@ -6,3 +6,7 @@
 
 /* i::device */
 #define create_block i::device->CreateStateBlock
+
+/* windows_sdk */
+#define clean_memory ZeroMemory
+#define create_window_ex CreateWindowEx

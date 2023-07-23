@@ -24,7 +24,7 @@ namespace sdk {
 			c_result create_device_window( c_device_x* p_d3d, UINT adapter, D3DDEVTYPE device_type, c_hwnd h_focus_window,
 											c_dword behavior_flags, c_device_parameter* presentation_parameters, c_device pp_device );
 			
-			c_device_x create_device( c_uint32 sdk_version );
+			c_device_x create_device_warper( c_uint32 sdk_version );
 
 			/* windows_sdk warpers */
 			c_function alloc_console();
@@ -44,6 +44,6 @@ namespace sdk {
 
 			c_atom register_class( const WNDCLASSEX& wcex );
 		};
-		inline const auto c_warp = std::make_unique< impl >( );
+		inline const auto c_init = std::make_unique< impl >( );
 	}
 }

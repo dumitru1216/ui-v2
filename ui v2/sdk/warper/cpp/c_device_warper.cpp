@@ -76,6 +76,6 @@ sdk::c_result sdk::warper::impl::create_device_window( c_device_x* p_d3d, UINT a
 	return ( *p_d3d )->CreateDevice( adapter, device_type, h_focus_window, behavior_flags, presentation_parameters, &pp_device );
 }
 
-sdk::c_device_x sdk::warper::impl::create_device( c_uint32 sdk_version ) {
+sdk::c_device_x sdk::warper::impl::create_device_warper( c_uint32 sdk_version ) {
 	return Direct3DCreate9( sdk_version );
 }

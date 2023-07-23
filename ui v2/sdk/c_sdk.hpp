@@ -20,7 +20,10 @@ namespace sdk {
 	using c_lresult = LRESULT;
 	using c_atom = ATOM;
 	using c_bool = BOOL;
+	using c_rect = RECT;
 	using c_device_parameter = D3DPRESENT_PARAMETERS;
+	using c_instance = HINSTANCE;
+	using c_lstr = LPCTSTR;
 
 	/* math */
 	namespace math {

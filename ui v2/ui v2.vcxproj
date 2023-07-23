@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\poc-pc\Desktop\ui v2\ui v2\thirdparty\imgui\freetype\include;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\poc-pc\Desktop\ui v2\ui v2\thirdparty\imgui\freetype\objs;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
     <OutDir>..\out\prerelease</OutDir>
     <IntDir>..\out\intermediate</IntDir>
   </PropertyGroup>
@@ -140,6 +140,15 @@
     <ClInclude Include="sdk\c_sdk.hpp" />
     <ClInclude Include="sdk\warper\c_warper.hpp" />
     <ClInclude Include="sdk\warper\c_macro.hpp" />
+    <ClInclude Include="thirdparty\imgui\imconfig.h" />
+    <ClInclude Include="thirdparty\imgui\imgui.h" />
+    <ClInclude Include="thirdparty\imgui\imgui_freetype.h" />
+    <ClInclude Include="thirdparty\imgui\imgui_impl_dx9.h" />
+    <ClInclude Include="thirdparty\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="thirdparty\imgui\imgui_internal.h" />
+    <ClInclude Include="thirdparty\imgui\imstb_rectpack.h" />
+    <ClInclude Include="thirdparty\imgui\imstb_textedit.h" />
+    <ClInclude Include="thirdparty\imgui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="entry\cpp\c_main.cpp" />
@@ -147,6 +156,13 @@
     <ClCompile Include="sdk\cpp\c_sdk.cpp" />
     <ClCompile Include="sdk\warper\cpp\c_device_warper.cpp" />
     <ClCompile Include="sdk\warper\cpp\c_windows_sdk_warper.cpp" />
+    <ClCompile Include="thirdparty\imgui\imgui.cpp" />
+    <ClCompile Include="thirdparty\imgui\imgui_draw.cpp" />
+    <ClCompile Include="thirdparty\imgui\imgui_freetype.cpp" />
+    <ClCompile Include="thirdparty\imgui\imgui_impl_dx9.cpp" />
+    <ClCompile Include="thirdparty\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="thirdparty\imgui\imgui_tables.cpp" />
+    <ClCompile Include="thirdparty\imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
