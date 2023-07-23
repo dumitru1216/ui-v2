@@ -117,5 +117,24 @@ namespace sdk {
 
 			int r, g, b, a;
 		};
+
+		struct fcol_t {
+			fcol_t( ) = default;
+			fcol_t( float _r, float _g, float _b, float _a = 1.0f ) :
+				r( _r ), g( _g ), b( _b ), a( _a ) { }
+
+			fcol_t( int _r, int _g, int _b, int _a = 255 ) {
+				set_color( _r, _g, _b, _a );
+			}
+
+			c_function set_color( float _r, float _g, float _b, float _a = 1.0f ) {
+				r = _r;
+				g = _g;
+				b = _b;
+				a = _a;
+			}
+
+			float r, g, b, a;
+		};
 	}
 }
