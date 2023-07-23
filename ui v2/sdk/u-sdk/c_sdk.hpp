@@ -11,6 +11,7 @@ namespace sdk {
 
 	/* other */
 	using c_hwnd = HWND;
+	using c_point = POINT;
 	using c_device_x = LPDIRECT3D9;
 	using c_device = LPDIRECT3DDEVICE9;
 	using c_dev = IDirect3DDevice9;
@@ -34,6 +35,44 @@ namespace sdk {
 			vec2_t( ) : x( 0 ), y( 0 ) { }
 			vec2_t( float x, float y ) : x( x ), y( y ) { }
 			~vec2_t( ) { }
+
+			/* operators */
+			bool operator==( const vec2_t& src ) const {
+				return ( src.x == this->x ) && ( src.y == y );
+			}
+
+			bool operator!=( const vec2_t& src ) const {
+				return ( src.x != this->x ) || ( src.y != y );
+			}
+
+			float& operator[]( int i ) {
+				return ( ( float* )this )[ i ];
+			}
+
+			float operator[]( int i ) const {
+				return ( ( float* )this )[ i ];
+			}
+
+			/* vec - vec */
+			vec2_t& operator-=( const vec2_t& v ) {
+				this->x -= v.x; this->y -= v.y;
+				return *this;
+			}
+
+			vec2_t& operator-=( float fl ) {
+				this->x -= fl;
+				this->y -= fl;
+
+				return *this;
+			}
+
+			vec2_t& operator-( vec2_t v ) {
+				vec2_t temp;
+				temp.x = this->x - v.x;
+				temp.y = this->y - v.y;
+
+				return temp;
+			}
 
 			/* parameters */
 			float x;
