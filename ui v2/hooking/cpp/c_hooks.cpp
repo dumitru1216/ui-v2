@@ -5,10 +5,6 @@
 	undefined behavior when the object its going to delete itself
 */
 
-sdk::c_function i::hooks::impl::initialize( ) {
-
-}
-
 sdk::c_function i::hooks::impl::clean_device( ) {
 	if ( device ) {
 		sdk::c_warper->release_device( &device );
