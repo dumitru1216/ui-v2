@@ -28,13 +28,13 @@ namespace sdk {
 			}
 
 			__forceinline c_function think( ) {
-				int x{ 8 }, y{ 5 }, size{ 10 };
+				int x{ 8 }, y{ 5 }, size{ 13 };
 				color::col_t c;
 				float left;
 
 				for ( c_size i{ }; i < notify_text.size( ); i++ ) {
 					auto notify = notify_text[ i ];
-					notify->time = 0.02f;
+					notify->time -= 0.02f;
 
 					if ( notify->time <= 0.f ) {
 						notify_text.erase( notify_text.begin( ) + i );

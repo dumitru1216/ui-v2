@@ -52,6 +52,9 @@ int main( sdk::c_instance instance, sdk::c_instance prev_instance,
 	sdk::c_msg msg{ };
 	clean_memory( &msg, sizeof( msg ) );
 	
+	/* initialize */
+	i::c_hooks->run_initialization( );
+
 	/* loop */
 	while ( msg.message != WM_QUIT ) {
 		if ( sdk::c_warper->peek_message( &msg, NULL, 0U, 0U, PM_REMOVE ) ) {

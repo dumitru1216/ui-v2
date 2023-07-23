@@ -9,6 +9,12 @@ namespace i {
 	namespace hooks {
 		class impl {
 		public:
+			struct c_initialization {
+				bool init_dev, init_imgui, init_cd, reg_wnd, init_wnd;
+			};
+			c_initialization c_log;
+
+			sdk::c_function run_initialization( );
 			sdk::c_function reset_device( );
 			sdk::c_function clean_device( );
 			sdk::c_function init_device( sdk::c_dev* device, std::function<void( )> function );

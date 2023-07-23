@@ -1,9 +1,29 @@
 #include "../c_hooks.hpp"
+#include "../../sdk/notify/c_notify.hpp"
 
 /*
 	note @dutu: we could have used .get()-> on c_init for better looking but i dont want to get 
 	undefined behavior when the object its going to delete itself
 */
+
+sdk::c_function i::hooks::impl::run_initialization( ) {
+	bool run_once = false;
+	if ( !run_once ) {
+		auto create_log = [ ]( bool bolean, sdk::c_str log )-> void {
+			log = bolean ? "initialized " + log : "couldn't initialize " + log;
+
+			sdk::c_notify->log( log );
+		};
+
+		create_log( c_log.init_dev, "device" );
+		create_log( c_log.init_imgui, "imgui" );
+		create_log( c_log.init_cd, "create_device" );
+		create_log( c_log.reg_wnd, "register_window" );
+		create_log( c_log.init_wnd, "window" );
+
+		run_once = true;
+	}
+}
 
 sdk::c_function i::hooks::impl::clean_device( ) {
 	if ( device ) {
@@ -87,6 +107,8 @@ sdk::c_function i::hooks::impl::init_device( sdk::c_dev* device, std::function<v
 	/* restore stateblock */
 	state_block->Apply( );
 	state_block->Release( );
+
+	c_log.init_dev = true;
 }
 
 sdk::c_bool i::hooks::impl::hook_create_device( sdk::c_hwnd w ) {
@@ -103,6 +125,7 @@ sdk::c_bool i::hooks::impl::hook_create_device( sdk::c_hwnd w ) {
 	if ( device_x->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, w, D3DCREATE_HARDWARE_VERTEXPROCESSING, &device_parameter, &device ) < 0 )
 		return FALSE;
 
+	c_log.init_cd = true;
 	return TRUE;
 }
 
@@ -123,6 +146,7 @@ sdk::c_atom i::hooks::impl::register_window( sdk::c_instance instance, sdk::c_ls
 	wcex.lpszClassName = name;
 	wcex.hIconSm = LoadIcon( wcex.hInstance, MAKEINTRESOURCE( IDI_SMALL ) );
 
+	c_log.reg_wnd = true;
 	return sdk::c_warper->register_class( wcex );
 }
 
@@ -141,6 +165,8 @@ sdk::c_atom i::hooks::impl::initialize_window( sdk::c_instance instance, sdk::c_
 	if ( !window ) { 
 		return FALSE;
 	}
+
+	c_log.init_wnd = true;
 	return TRUE;
 }
 
@@ -153,4 +179,6 @@ sdk::c_function i::hooks::impl::init_imgui( sdk::c_hwnd w, sdk::c_dev* device ) 
 
 	ImGui_ImplWin32_Init( w );
 	ImGui_ImplDX9_Init( device );
+
+	c_log.init_imgui = true;
 }
