@@ -63,7 +63,9 @@ int main( sdk::c_instance instance, sdk::c_instance prev_instance,
 		sdk::c_warper->warp_frame( );
 		sdk::c_warper->begin_frame( ); {
 			/* run there */
-			sdk::drawing::rect_filled( 10, 10, 10, 10, sdk::color::col_t( ), 2 );
+
+			/* think log drawing */
+			sdk::c_notify->think( );
 		}
 		sdk::c_warper->end_frame( );
 
