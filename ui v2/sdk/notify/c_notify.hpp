@@ -45,7 +45,29 @@ namespace sdk {
 				if ( notify_text.empty( ) )
 					return;
 
-				/* finish it */
+				for ( c_size i{}; i < notify_text.size( ); i++ ) {
+					auto notify = notify_text[ i ];
+
+					left = notify->time;
+					c = notify->c;
+
+					if ( left < .5 ) {
+						float f = left;
+						std::clamp( f, 0.f, .5f );
+
+						f /= .5f;
+
+						c.modify_alpha( ( int )( f * 255.f ) );
+
+						if ( i == 0 && f < 0.2f )
+							y -= size * ( 1.f - f / 0.2f );
+					} else {
+						c.modify_alpha( 255 );
+					}
+
+					sdk::drawing::text( x, y, c, sdk::drawing::c_fonts::d_font, notify->text.c_str( ), false );
+					y += size;
+				}
 			}
 		};
 	}
