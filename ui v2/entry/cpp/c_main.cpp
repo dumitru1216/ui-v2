@@ -1,7 +1,7 @@
 #include "../../c_includes.hpp"
 #include "../../sdk/notify/c_notify.hpp"
 
-int install( sdk::c_instance instance, sdk::c_instance prev_instance,
+int main( sdk::c_instance instance, sdk::c_instance prev_instance,
 		  LPWSTR cmd_line, int cmd_show ) {
 	sdk::c_warper->alloc_console( );
 
@@ -16,22 +16,37 @@ int install( sdk::c_instance instance, sdk::c_instance prev_instance,
 		return 0;
 	}
 
-	if ( !i::c_hooks->hook_create_device( i::window ) ) {
-		i::c_hooks->clean_device( );
+	/* initialize window and device -> gheto */ {
+		if ( ( device_x = Direct3DCreate9( D3D_SDK_VERSION ) ) == NULL ) {
+			return FALSE;
+		}
 
-		/* unregister class */
-		sdk::c_warper->unregister_class( lpz_class, instance );
+		clean_memory( &device_parameter, sizeof( device_parameter ) );
 
-		/* stop it */
-		return 0;
+		/* warp dx */
+		sdk::c_warper->warp_dx( &device_parameter );
+
+		if ( !window ) {
+			sdk::c_rect screen_rect{};
+			GetWindowRect( GetDesktopWindow( ), &screen_rect );
+
+			/* on the whole screen */
+			window = CreateWindowEx( WS_EX_APPWINDOW, lpz_class, name, WS_POPUP,
+									 screen_rect.left, screen_rect.top, screen_rect.right /* width */,
+									 screen_rect.bottom /* height */, NULL, NULL, instance, NULL );
+		}
+
+		/* create device */
+		if ( device_x->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, window, D3DCREATE_HARDWARE_VERTEXPROCESSING, &device_parameter, &device ) < 0 )
+			return 0;
 	}
 
 	/* window updating */
-	sdk::c_warper->show_window( i::window, SW_SHOWDEFAULT );
-	sdk::c_warper->update_window( i::window );
+	sdk::c_warper->show_window( window, SW_SHOWDEFAULT );
+	sdk::c_warper->update_window( window );
 
 	/* warp imgui */
-	i::c_hooks->init_imgui( i::window, i::device );
+	i::c_hooks->init_imgui( window, device );
 
 	/* mem handler */
 	sdk::c_msg msg{ };
@@ -48,22 +63,23 @@ int install( sdk::c_instance instance, sdk::c_instance prev_instance,
 		sdk::c_warper->warp_frame( );
 		sdk::c_warper->begin_frame( ); {
 			/* run there */
+			sdk::drawing::rect_filled( 10, 10, 10, 10, sdk::color::col_t( ), 2 );
 		}
 		sdk::c_warper->end_frame( );
 
 		/* render states and clear device */
-		sdk::c_warper->set_render_state( i::device, D3DRS_ZENABLE, false );
-		sdk::c_warper->set_render_state( i::device, D3DRS_ALPHABLENDENABLE, false );
-		sdk::c_warper->set_render_state( i::device, D3DRS_SCISSORTESTENABLE, false );
+		sdk::c_warper->set_render_state( device, D3DRS_ZENABLE, false );
+		sdk::c_warper->set_render_state( device, D3DRS_ALPHABLENDENABLE, false );
+		sdk::c_warper->set_render_state( device, D3DRS_SCISSORTESTENABLE, false );
 
 		/* clear */
 		sdk::c_warper->clear(
-			i::device, 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_RGBA( 23, 23, 23, 0 ), 1.0f, 0
+			device, 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_RGBA( 23, 23, 23, 0 ), 1.0f, 0
 		);
 
 		/* init scene */
-		if ( sdk::c_warper->begin_scene( i::device ) >= 0 ) {
-			i::c_hooks->init_device( i::device, [ = ]( ) {
+		if ( sdk::c_warper->begin_scene( device ) >= 0 ) {
+			i::c_hooks->init_device( device, [ = ]( ) {
 				/* here we are going to render our stuff */
 				ImGui::Render( );
 				ImGui_ImplDX9_RenderDrawData( ImGui::GetDrawData( ) );
@@ -76,18 +92,24 @@ int install( sdk::c_instance instance, sdk::c_instance prev_instance,
 			}
 
 			/* end scene */
-			sdk::c_warper->end_scene( i::device );
+			sdk::c_warper->end_scene( device );
 		}
 
 		/* handle packet loss - i will handle it tmr */
-		HRESULT result{ i::device->Present( NULL, NULL, NULL, NULL ) };
-		if ( result == D3DERR_DEVICELOST && i::device->TestCooperativeLevel( ) == D3DERR_DEVICENOTRESET )
+		HRESULT result{ device->Present( NULL, NULL, NULL, NULL ) };
+		if ( result == D3DERR_DEVICELOST && device->TestCooperativeLevel( ) == D3DERR_DEVICENOTRESET )
 			i::c_hooks->reset_device( );
 	}
-}
 
-/* main function */
-int main( sdk::c_instance instance, sdk::c_instance prev_instance,
-		  LPWSTR cmd_line, int cmd_show ) {
-	install( instance, prev_instance, cmd_line, cmd_show );
+	/* clean again */
+	i::c_hooks->clean_device( );
+
+	/* destroy it */
+	sdk::c_warper->destroy_window( window );
+
+	/* unregister class */
+	sdk::c_warper->unregister_class( lpz_class, instance );
+
+	/* stop it */
+	return 0;
 }

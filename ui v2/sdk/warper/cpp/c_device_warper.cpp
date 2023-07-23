@@ -61,7 +61,7 @@ sdk::c_function sdk::warper::impl::release_device_pointer( c_device_x* device_po
 }
 
 sdk::c_result sdk::warper::impl::reset_device( c_device_parameter reset_parrameter ) {
-	return i::device->Reset( &reset_parrameter );
+	return device->Reset( &reset_parrameter );
 }
 
 sdk::c_result sdk::warper::impl::clear( c_device device, c_dword count, const D3DRECT* p_rects, c_dword flags, D3DCOLOR color, float z, c_dword stencil ) {

@@ -29,13 +29,14 @@
 /* the coding style will troll retards */
 #include "sdk/u-sdk/c_sdk.hpp"
 #include "sdk/warper/c_warper.hpp"
-#include "sdk/warper/c_macro.hpp"
-#include "sdk/drawing/c_drawing.hpp"
 
 #include "thirdparty/imgui/imgui.h"
 #include "thirdparty/imgui/imgui_freetype.h"
 #include "thirdparty/imgui/imgui_impl_win32.h"
 #include "thirdparty/imgui/imgui_impl_dx9.h"
+
+#include "sdk/warper/c_macro.hpp"
+#include "sdk/drawing/c_drawing.hpp"
 
 /* resources */
 #define IDS_APP_TITLE 103

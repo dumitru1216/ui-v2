@@ -6,8 +6,8 @@ sdk::c_function sdk::warper::impl::alloc_console( ) {
 }
 
 sdk::c_bool sdk::warper::impl::take_client_rect( c_hwnd window_handle, RECT* screen_rect ) {
-    if ( i::window && screen_rect ) { /* safety condition */
-        return GetClientRect( i::window, screen_rect );
+    if ( window_handle && screen_rect ) { /* safety condition */
+        return GetClientRect( window_handle, screen_rect );
     }
 
     /* for any other values we are going to return false */
@@ -18,8 +18,8 @@ sdk::c_bool sdk::warper::impl::take_window_rect( c_hwnd window_handle, RECT* scr
     /*
         might be an issue the operator from screen_rect, we are going to see later
     */
-    if ( i::window && screen_rect ) { /* safety condition */
-        return GetWindowRect( i::window, screen_rect );
+    if ( window_handle && screen_rect ) { /* safety condition */
+        return GetWindowRect( window_handle, screen_rect );
     }
 
     /* for any other values we are going to return false */

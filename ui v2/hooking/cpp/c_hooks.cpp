@@ -9,7 +9,7 @@ sdk::c_function i::hooks::impl::clean_device( ) {
 	if ( device ) {
 		sdk::c_warper->release_device( &device );
 	}
-
+	
 	if ( device_x ) {
 		sdk::c_warper->release_device_pointer( &device_x );
 	}
@@ -33,7 +33,7 @@ sdk::c_function i::hooks::impl::init_device( sdk::c_dev* device, std::function<v
 
 	/* get display size */
 	sdk::c_rect screen_rect{};
-	sdk::c_warper->take_client_rect( i::window, &screen_rect );
+	sdk::c_warper->take_client_rect( window, &screen_rect );
 
 	/* display size, we are going to directly initialize it */
 	sdk::math::vec2_t display_size{ sdk::math::vec2_t(
@@ -89,24 +89,24 @@ sdk::c_function i::hooks::impl::init_device( sdk::c_dev* device, std::function<v
 	state_block->Release( );
 }
 
-sdk::c_bool i::hooks::impl::hook_create_device( sdk::c_hwnd window ) {
-	if ( ( i::device_x = Direct3DCreate9( D3D_SDK_VERSION ) ) == NULL ) {
+sdk::c_bool i::hooks::impl::hook_create_device( sdk::c_hwnd w ) {
+	if ( ( device_x = Direct3DCreate9( D3D_SDK_VERSION ) ) == NULL ) {
 		return FALSE;
 	}
 
-	clean_memory( &i::device_parameter, sizeof( i::device_parameter ) );
+	clean_memory( &device_parameter, sizeof( device_parameter ) );
 
 	/* warp dx */
-	sdk::c_warper->warp_dx( &i::device_parameter );
+	sdk::c_warper->warp_dx( &device_parameter );
 
 	/* create device */
-	if ( create_device( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, i::window, D3DCREATE_HARDWARE_VERTEXPROCESSING, &i::device_parameter, &i::device ) < 0 )
+	if ( device_x->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, w, D3DCREATE_HARDWARE_VERTEXPROCESSING, &device_parameter, &device ) < 0 )
 		return FALSE;
 
 	return TRUE;
 }
 
-/* predefine */ sdk::c_lresult __stdcall wnd_handle( sdk::c_hwnd window, UINT msg, WPARAM wp, LPARAM lp );
+/* predefine */ sdk::c_lresult CALLBACK wnd_handle( sdk::c_hwnd w, UINT msg, WPARAM wp, LPARAM lp );
 sdk::c_atom i::hooks::impl::register_window( sdk::c_instance instance, sdk::c_lstr name ) {
 	WNDCLASSEX wcex{};
 
@@ -122,31 +122,35 @@ sdk::c_atom i::hooks::impl::register_window( sdk::c_instance instance, sdk::c_ls
 	wcex.lpszMenuName = MAKEINTRESOURCE( IDC_GUITEST );
 	wcex.lpszClassName = name;
 	wcex.hIconSm = LoadIcon( wcex.hInstance, MAKEINTRESOURCE( IDI_SMALL ) );
+
+	return sdk::c_warper->register_class( wcex );
 }
 
-sdk::c_lresult __stdcall wnd_handle( sdk::c_hwnd window, UINT msg, WPARAM wp, LPARAM lp ) {
-	return DefWindowProcA( window, msg, wp, lp );
+sdk::c_lresult CALLBACK wnd_handle( sdk::c_hwnd w, UINT msg, WPARAM wp, LPARAM lp ) {
+	return DefWindowProcA( w, msg, wp, lp );
 }
 
 sdk::c_atom i::hooks::impl::initialize_window( sdk::c_instance instance, sdk::c_lstr class_name, sdk::c_lstr title ) {
-	sdk::c_rect screen_rect{};
-	sdk::c_warper->take_window_rect( GetDesktopWindow( ), &screen_rect );
+	RECT screen_rect{};
+	GetWindowRect( GetDesktopWindow( ), &screen_rect );
 
 	/* finnaly we initialize our window */
-	i::window = create_window_ex( WS_EX_APPWINDOW, class_name, title, WS_POPUP, screen_rect.left, screen_rect.top,
+	window = CreateWindowEx( WS_EX_APPWINDOW, class_name, title, WS_POPUP, screen_rect.left, screen_rect.top,
 																 screen_rect.right, screen_rect.bottom, NULL, NULL, instance, NULL );
 
-	if ( !i::window ) { return FALSE; }
+	if ( !window ) { 
+		return FALSE;
+	}
 	return TRUE;
 }
 
-sdk::c_function i::hooks::impl::init_imgui( sdk::c_hwnd window, sdk::c_dev* device ) {
+sdk::c_function i::hooks::impl::init_imgui( sdk::c_hwnd w, sdk::c_dev* device ) {
 	IMGUI_CHECKVERSION( );
 
 	ImGui::CreateContext( );
 	ImGuiIO& io = ImGui::GetIO( );
 	ImGui::StyleColorsDark( );
 
-	ImGui_ImplWin32_Init( window );
+	ImGui_ImplWin32_Init( w );
 	ImGui_ImplDX9_Init( device );
 }

@@ -2,10 +2,10 @@
 #include "../../hooking/c_hooks.hpp"
 
 /* i::device_x */
-#define create_device i::device_x->CreateDevice
+#define create_device device_x->CreateDevice
 
 /* i::device */
-#define create_block i::device->CreateStateBlock
+#define create_block device->CreateStateBlock
 
 /* windows_sdk */
 #define clean_memory ZeroMemory
