@@ -46,7 +46,7 @@ namespace sdk {
 			col_t( int r, int g, int b, int a = 255 ) : r( r ), g( g ), b( b ), a( a ) { }
 			~col_t( ) { }
 
-			std::uint32_t g_convert( ) {
+			std::uint32_t convert( ) {
 				std::uint32_t out = 0;
 
 				out = static_cast< std::uint32_t >( this->r ) << 0;
@@ -57,11 +57,11 @@ namespace sdk {
 				return out;
 			}
 
-			col_t g_modify_alpha( int a ) {
+			col_t modify_alpha( int a ) {
 				return col_t( r, g, b, a );
 			}
 
-			col_t g_darker( int amount ) {
+			col_t darker( int amount ) {
 				int red = r;
 				int green = g;
 				int blue = b;
