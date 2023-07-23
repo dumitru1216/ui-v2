@@ -24,7 +24,7 @@
     <ClInclude Include="c_includes.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\c_sdk.hpp">
+    <ClInclude Include="sdk\u-sdk\c_sdk.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sdk\warper\c_macro.hpp">
@@ -68,7 +68,7 @@
     <ClCompile Include="hooking\cpp\c_hooks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sdk\cpp\c_sdk.cpp">
+    <ClCompile Include="sdk\u-sdk\cpp\c_sdk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sdk\warper\cpp\c_device_warper.cpp">
