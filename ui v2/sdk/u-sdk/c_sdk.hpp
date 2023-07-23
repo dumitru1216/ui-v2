@@ -24,6 +24,7 @@ namespace sdk {
 	using c_device_parameter = D3DPRESENT_PARAMETERS;
 	using c_instance = HINSTANCE;
 	using c_lstr = LPCTSTR;
+	using c_size = size_t;
 
 	/* math */
 	namespace math {

@@ -30,6 +30,7 @@
 #include "sdk/u-sdk/c_sdk.hpp"
 #include "sdk/warper/c_warper.hpp"
 #include "sdk/warper/c_macro.hpp"
+#include "sdk/drawing/c_drawing.hpp"
 
 #include "thirdparty/imgui/imgui.h"
 #include "thirdparty/imgui/imgui_freetype.h"

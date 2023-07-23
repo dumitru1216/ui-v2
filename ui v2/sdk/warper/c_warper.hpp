@@ -44,6 +44,7 @@ namespace sdk {
 
 			c_atom register_class( const WNDCLASSEX& wcex );
 		};
-		inline const auto c_init = std::make_unique< impl >( );
 	}
+
+	inline const auto c_warper = std::make_unique< warper::impl >( );
 }
