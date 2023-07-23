@@ -4,12 +4,23 @@
 namespace sdk {
 	using c_str = std::string;
 	using c_str_vec = std::vector<std::string>;
+	using c_uint32 = std::uint32_t;
 
 	/* client funcs */
-	using c_funcion = void;
+	using c_function = void;
+
+	/* other */
 	using c_hwnd = HWND;
 	using c_device_x = LPDIRECT3D9;
 	using c_device = LPDIRECT3DDEVICE9;
+	using c_dev = IDirect3DDevice9;
+	using c_viewport = D3DVIEWPORT9;
+	using c_dword = DWORD;
+	using c_result = HRESULT;
+	using c_lresult = LRESULT;
+	using c_atom = ATOM;
+	using c_bool = BOOL;
+	using c_device_parameter = D3DPRESENT_PARAMETERS;
 
 	/* math */
 	namespace math {

@@ -30,6 +30,9 @@
     <ClInclude Include="sdk\warper\c_macro.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sdk\warper\c_warper.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="entry\cpp\c_main.cpp">
@@ -39,6 +42,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sdk\cpp\c_sdk.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdk\warper\cpp\c_device_warper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdk\warper\cpp\c_windows_sdk_warper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
