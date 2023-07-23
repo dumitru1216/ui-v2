@@ -25,6 +25,7 @@ namespace sdk {
 	using c_instance = HINSTANCE;
 	using c_lstr = LPCTSTR;
 	using c_size = size_t;
+	using c_msg = MSG;
 
 	/* math */
 	namespace math {

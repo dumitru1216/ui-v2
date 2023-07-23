@@ -32,6 +32,21 @@ int install( sdk::c_instance instance, sdk::c_instance prev_instance,
 
 	/* warp imgui */
 	i::c_hooks->init_imgui( i::window, i::device );
+
+	/* mem handler */
+	sdk::c_msg msg{ };
+	clean_memory( &msg, sizeof( msg ) );
+	
+	/* loop */
+	while ( msg.message != WM_QUIT ) {
+		if ( sdk::c_warper->peek_message( &msg, NULL, 0U, 0U, PM_REMOVE ) ) {
+			sdk::c_warper->translate_message( &msg );
+			sdk::c_warper->dispatch_message( &msg );
+			continue;
+		}
+
+
+	}
 }
 
 /* main function */

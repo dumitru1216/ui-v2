@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="entry\c_main.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="hooking\c_hooks.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -61,6 +58,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sdk\drawing\c_drawing.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\fonts\c_fonts.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\notify\c_notify.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

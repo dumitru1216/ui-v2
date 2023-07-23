@@ -16,6 +16,9 @@ namespace sdk {
 			c_function warp_dx( c_device_parameter* destination );
 			c_function release_device( c_device* device );
 			c_function release_device_pointer( c_device_x* device_pointer );
+			c_function warp_frame( );
+			c_function begin_frame( );
+			c_function end_frame( );
 
 			c_result begin_scene( c_device device );
 			c_result end_scene( c_device device );

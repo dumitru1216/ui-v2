@@ -134,10 +134,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="entry\c_main.hpp" />
     <ClInclude Include="hooking\c_hooks.hpp" />
     <ClInclude Include="c_includes.hpp" />
+    <ClInclude Include="sdk\notify\c_notify.hpp" />
     <ClInclude Include="sdk\drawing\c_drawing.hpp" />
+    <ClInclude Include="sdk\fonts\c_fonts.hpp" />
     <ClInclude Include="sdk\u-sdk\c_sdk.hpp" />
     <ClInclude Include="sdk\warper\c_warper.hpp" />
     <ClInclude Include="sdk\warper\c_macro.hpp" />

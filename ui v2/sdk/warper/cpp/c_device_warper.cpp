@@ -79,3 +79,16 @@ sdk::c_result sdk::warper::impl::create_device_window( c_device_x* p_d3d, UINT a
 sdk::c_device_x sdk::warper::impl::create_device_warper( c_uint32 sdk_version ) {
 	return Direct3DCreate9( sdk_version );
 }
+
+sdk::c_function sdk::warper::impl::warp_frame( ) {
+	ImGui_ImplDX9_NewFrame( );
+	ImGui_ImplWin32_NewFrame( );
+}
+
+sdk::c_function sdk::warper::impl::begin_frame( ) {
+	ImGui::NewFrame( );
+}
+
+sdk::c_function sdk::warper::impl::end_frame( ) {
+	ImGui::EndFrame( );
+}
