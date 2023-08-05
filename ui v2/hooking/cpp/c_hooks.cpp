@@ -1,10 +1,12 @@
 #include "../c_hooks.hpp"
 #include "../../sdk/notify/c_notify.hpp"
+#include "../../sdk/textures/csgo.h"
 
 /*
 	note @dutu: we could have used .get()-> on c_init for better looking but i dont want to get 
 	undefined behavior when the object its going to delete itself
 */
+IDirect3DTexture9* backround = nullptr;
 
 sdk::c_function i::hooks::impl::run_initialization( ) {
 	bool run_once = false;
@@ -177,8 +179,13 @@ sdk::c_function i::hooks::impl::init_imgui( sdk::c_hwnd w, sdk::c_dev* device ) 
 	ImGuiIO& io = ImGui::GetIO( );
 	ImGui::StyleColorsDark( );
 
+	if ( backround == nullptr )
+		D3DXCreateTextureFromFileInMemoryEx( device, csgo_bg, sizeof( csgo_bg ), 1920, 1080, D3DX_DEFAULT, D3DUSAGE_DYNAMIC, D3DFMT_UNKNOWN, D3DPOOL_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, NULL, NULL, &backround );
+
 	ImGui_ImplWin32_Init( w );
 	ImGui_ImplDX9_Init( device );
+
+	sdk::drawing::init_fonts( );
 
 	c_log.init_imgui = true;
 }

@@ -7,7 +7,12 @@
 namespace sdk {
 	namespace drawing {
 		enum c_fonts {
-			d_font = 0
+			smallest_pixel,
+			verdana,
+			verdanab,
+			tahoma,
+			icon,
+			default_font
 		};
 
 		c_function rect_filled( int x, int y, int w, int h, color::col_t c, int rounding = 0.f );

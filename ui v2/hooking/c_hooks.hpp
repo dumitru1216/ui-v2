@@ -5,6 +5,9 @@ static sdk::c_device_x device_x = NULL; /* device d3d */
 static sdk::c_device device = NULL; /* device handle */
 static sdk::c_device_parameter device_parameter = {};
 
+/* backround */
+extern IDirect3DTexture9* backround;
+
 namespace i {
 	namespace hooks {
 		class impl {

@@ -1,8 +1,16 @@
 #include "../c_window.hpp"
 #include "../../../gui/c_gui.hpp"
+#include "../../../../sdk/notify/c_notify.hpp"
+#include "../../../../sdk/easing/c_easing.hpp"
 
 bool title_bar_hovered;
 sdk::c_str form_name;
+
+std::map<int, float> select_animation;
+std::map<int, float> select_timer;
+
+std::map<int, float> hover_animation;
+std::map<int, float> hover_timer;
 
 /* reset window */
 sdk::c_function gui::window::impl::reset( ) {
@@ -26,6 +34,8 @@ sdk::c_function gui::window::impl::reset( ) {
 }
 
 bool gui::window::begin_window( sdk::c_str name ) {
+    sdk::drawing::image( 0, 0, 1920, 1090, backround );
+
     static bool b_reset_window = true;
     if ( ctx->animation <= 0.0f ) {
         if ( b_reset_window ) {
@@ -84,22 +94,185 @@ bool gui::window::begin_window( sdk::c_str name ) {
     sdk::alpha_mod = ctx->animation;
 
     /* menu outline */
-    static sdk::color::col_t menu_outline[ 6 ] = {
-        sdk::color::col_t( 60, 60, 60 ),
-        sdk::color::col_t( 40, 40, 40 ),
-        sdk::color::col_t( 40, 40, 40 ),
-        sdk::color::col_t( 40, 40, 40 ),
-        sdk::color::col_t( 60, 60, 60 ),
-        sdk::color::col_t( 10, 10, 10 )
+    static sdk::color::col_t menu_colors[ 3 ] = {
+        sdk::color::col_t( 0, 0, 0 ), // outline 1
+        sdk::color::col_t( 28, 28, 28 ), // outline 2
+        sdk::color::col_t( 22, 22, 22 ) // backround
     };
-    
-    /* render menu outline */
-    for ( int rects = 1; rects < 7; ++rects ) {
-        sdk::drawing::rect(
-            ctx->pos.x - rects, ctx->pos.y - rects, ( ctx->size.x - 1 ) + ( rects * 2 ), ( ctx->size.y - 1 ) + ( rects * 2 ), 
-            menu_outline[ rects - 1 ].modify_alpha( 255 )
-        );
+
+    /* render menu */
+    sdk::drawing::rect_filled( 
+        ctx->pos.x, ctx->pos.y, ctx->size.x, ctx->size.y, menu_colors[ 2 ].modify_alpha( 255 * ctx->animation ), 3 
+    );
+
+    sdk::drawing::rect_filled(
+        ctx->pos.x, ctx->pos.y, ctx->size.x, 37, menu_colors[ 0 ].modify_alpha( 255 * ctx->animation ), 3
+    );
+
+    sdk::drawing::rect_filled(
+        ctx->pos.x, ctx->pos.y + 37, ctx->size.x, 1, menu_colors[ 1 ].modify_alpha( 255 * ctx->animation ), 3
+    );
+
+    sdk::drawing::text(
+        ctx->pos.x + 10, ctx->pos.y + 10, ctx->accent.modify_alpha( 255 * ctx->animation ), sdk::drawing::c_fonts::verdanab, "d-ui"
+    );
+
+    sdk::drawing::text(
+        ctx->pos.x + 10 + sdk::drawing::get_text_size( "d-ui", sdk::drawing::c_fonts::verdanab ).x, ctx->pos.y + 10, sdk::color::col_t( ).modify_alpha( 200 * ctx->animation ), sdk::drawing::c_fonts::verdana, "render"
+    );
+
+    /* lambada */
+    auto to_vector = [ ]( float a, float b )-> sdk::math::vec2_t {
+        return sdk::math::vec2_t( a, b );
+    };
+
+    for ( int i = 0; i < ctx->tabs.size( ); ++i ) {
+        auto size_tab = sdk::drawing::get_text_size( ctx->tabs[ i ].c_str( ), sdk::drawing::c_fonts::icon );
+
+        sdk::math::vec2_t tab_size = to_vector( size_tab.x, size_tab.y );
+        sdk::math::vec2_t tab_pos = ctx->pos + sdk::math::vec2_t( ( 100 + ( ctx->size.x - 285 ) ) + ( 35 * i ), 10 );
+
+        if ( hover_animation.find( i ) == hover_animation.end( ) ) {
+            hover_animation.insert( { i, 0.f } );
+            hover_timer.insert( { i, 0.f } );
+
+            select_animation.insert( { i, 0.f } );
+            select_timer.insert( { i, 0.f } );
+        }
+
+        if ( sdk::input::input_sys::get( )->is_in_box( tab_pos, sdk::math::vec2_t( 20, 20 ) ) ) {
+            hover_timer.at( i ) += ( 1.0f / 0.2f ) * 0.003f;
+            hover_timer.at( i ) = std::clamp<float>( hover_timer.at( i ), 0.f, 1.f );
+
+            hover_animation.at( i ) = sdk::easing::out_circ( hover_timer.at( i ) );
+
+            if ( hover_animation.at( i ) >= 0.999998 ) {
+                hover_animation.at( i ) = 1.f;
+            }
+        } else {
+            if ( i != ctx->active_tab ) {
+                hover_timer.at( i ) -= ( 1.0f / 0.2f ) * 0.003f;
+                hover_timer.at( i ) = std::clamp<float>( hover_timer.at( i ), 0.f, 1.f );
+
+                hover_animation.at( i ) = sdk::easing::out_circ( hover_timer.at( i ) );
+
+                if ( hover_animation.at( i ) <= 0.05f ) {
+                    hover_animation.at( i ) = 0.f;
+                }
+            }
+        }
+
+        if ( i == ctx->active_tab ) {
+            select_timer.at( i ) += ( 1.0f / 0.2f ) * 0.003f;
+            select_timer.at( i ) = std::clamp<float>( select_timer.at( i ), 0.f, 1.f );
+
+            select_animation.at( i ) = sdk::easing::out_circ( select_timer.at( i ) );
+
+            if ( select_animation.at( i ) >= 0.999998 ) {
+                select_animation.at( i ) = 1.f;
+            }
+        } else {
+            select_timer.at( i ) -= ( 1.0f / 0.2f ) * 0.003f;
+            select_timer.at( i ) = std::clamp<float>( select_timer.at( i ), 0.f, 1.f );
+
+            select_animation.at( i ) = sdk::easing::out_circ( select_timer.at( i ) );
+
+            if ( select_animation.at( i ) <= 0.05f ) {
+                select_animation.at( i ) = 0.f;
+            }
+        }
+
+        int add_to_tab{};
+        if ( ctx->tabs[ i ] == "6" ) {
+            add_to_tab = 5;
+        }
+
+        if ( ctx->active_tab != i ) {
+            sdk::drawing::text(
+                tab_pos.x + add_to_tab, tab_pos.y, sdk::color::col_t( 90, 90, 90 ), sdk::drawing::c_fonts::icon, ctx->tabs[i].c_str()
+            );
+        }
+
+        if ( ctx->active_tab == i ) {
+            sdk::drawing::rect_filled(
+                tab_pos.x + add_to_tab - 6, tab_pos.y - 6, 32, 36, menu_colors[ 1 ].modify_alpha( 255 * ctx->animation ), 5
+            );
+
+            /* select */
+            {
+                int middle_x = tab_pos.x + add_to_tab + 10;
+                int half_width = 16 * select_animation.at( i );
+
+                sdk::drawing::rect_filled(
+                    middle_x - half_width, tab_pos.y - 6, half_width + 1, 3,
+                    ctx->accent.modify_alpha( 255 * ctx->animation ), 3
+                );
+
+                sdk::drawing::rect_filled(
+                    middle_x, tab_pos.y - 6, half_width, 3,
+                    ctx->accent.modify_alpha( 255 * ctx->animation ), 3
+                );
+            }
+            
+            sdk::drawing::rect_filled(
+                tab_pos.x + add_to_tab - 5, tab_pos.y - 5, 30, 36, menu_colors[2].modify_alpha( 255 * ctx->animation ), 3
+            );
+
+            sdk::drawing::text(
+                tab_pos.x + add_to_tab, tab_pos.y, ctx->accent.modify_alpha( 255 * ctx->animation ), sdk::drawing::c_fonts::icon, ctx->tabs[ i ].c_str( )
+            );
+        } else {
+            if ( sdk::input::input_sys::get( )->is_in_box( tab_pos, sdk::math::vec2_t( 20, 20 ) ) ) {
+                sdk::drawing::rect_filled(
+                    tab_pos.x + add_to_tab - 6, tab_pos.y - 6, 32, 36, menu_colors[ 1 ].modify_alpha( 255 * ctx->animation ), 5
+                );
+
+                /* hover */
+                {
+                    int middle_x = tab_pos.x + add_to_tab + 10;
+                    int half_width = 16 * hover_animation.at( i );
+
+                    sdk::drawing::rect_filled(
+                        middle_x - half_width, tab_pos.y - 6, half_width + 1, 3,
+                        ctx->accent.modify_alpha( 150 * ctx->animation ), 3
+                    );
+
+                    sdk::drawing::rect_filled(
+                        middle_x, tab_pos.y - 6, half_width, 3,
+                        ctx->accent.modify_alpha( 150 * ctx->animation ), 3
+                    );
+                }
+
+                sdk::drawing::rect_filled(
+                    tab_pos.x + add_to_tab - 5, tab_pos.y - 5, 30, 36, menu_colors[ 2 ].modify_alpha( 255 * ctx->animation ), 3
+                );
+
+                sdk::drawing::text(
+                    tab_pos.x + add_to_tab, tab_pos.y, sdk::color::col_t( 150, 150, 150 ).modify_alpha( 255 * ctx->animation ), sdk::drawing::c_fonts::icon, ctx->tabs[ i ].c_str( )
+                );
+
+                if ( sdk::input::input_sys::get( )->was_key_pressed( VK_LBUTTON ) ) {
+                    ctx->active_tab = i;
+                }       
+            }
+        }
     }
+
+    /* render menu outline */
+    sdk::drawing::rect(
+        ctx->pos.x - 1, ctx->pos.y - 1, ctx->size.x + 2, ctx->size.y + 2,
+        menu_colors[ 0 ].modify_alpha( 255 * ctx->animation ), 2
+    );
+
+    sdk::drawing::rect(
+        ctx->pos.x, ctx->pos.y, ctx->size.x, ctx->size.y,
+        menu_colors[ 1 ].modify_alpha( 255 * ctx->animation ), 2
+    );
+
+    ctx->tabs.clear( );
+    gui::helpers::push_cusor_pos( sdk::math::vec2_t(
+        104, 24
+    ) );
 
     return true;
 }
@@ -122,4 +295,11 @@ void gui::window::end_window( ) {
     }
 
     sdk::alpha_mod = -1.f;
+}
+
+bool gui::window::begin_tab( sdk::c_str name ) {
+    ctx->tabs.push_back( name.data( ) );
+    ctx->current_tab = name;
+
+    return ( ctx->active_tab == ctx->tabs.size( ) - 1 ) || ctx->setup;
 }

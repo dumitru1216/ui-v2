@@ -145,11 +145,19 @@
     <ClInclude Include="hooking\c_hooks.hpp" />
     <ClInclude Include="c_includes.hpp" />
     <ClInclude Include="sdk\easing\c_easing.hpp" />
+    <ClInclude Include="sdk\fonts\acta.h" />
+    <ClInclude Include="sdk\fonts\arrowmod.h" />
+    <ClInclude Include="sdk\fonts\icons.h" />
+    <ClInclude Include="sdk\fonts\MuseoSansCyrl_1.h" />
+    <ClInclude Include="sdk\fonts\segoeui.h" />
+    <ClInclude Include="sdk\fonts\segoeuib.h" />
+    <ClInclude Include="sdk\fonts\tahoma.h" />
     <ClInclude Include="sdk\input\c_input.hpp" />
     <ClInclude Include="sdk\notify\c_notify.hpp" />
     <ClInclude Include="sdk\drawing\c_drawing.hpp" />
     <ClInclude Include="sdk\fonts\c_fonts.hpp" />
     <ClInclude Include="sdk\protection\c_protection.hpp" />
+    <ClInclude Include="sdk\textures\csgo.h" />
     <ClInclude Include="sdk\u-sdk\c_sdk.hpp" />
     <ClInclude Include="sdk\warper\c_warper.hpp" />
     <ClInclude Include="sdk\warper\c_macro.hpp" />
@@ -170,6 +178,7 @@
     <ClCompile Include="framework\gui\cpp\c_gui.cpp" />
     <ClCompile Include="hooking\cpp\c_hooks.cpp" />
     <ClCompile Include="sdk\drawing\cpp\c_drawing.cpp" />
+    <ClCompile Include="sdk\fonts\Museo Sans Cyrl 500.c" />
     <ClCompile Include="sdk\input\cpp\c_input.cpp" />
     <ClCompile Include="sdk\u-sdk\cpp\c_sdk.cpp" />
     <ClCompile Include="sdk\warper\cpp\c_device_warper.cpp" />

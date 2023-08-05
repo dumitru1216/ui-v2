@@ -68,7 +68,7 @@ namespace sdk {
 						c.modify_alpha( 255 );
 					}
 
-					sdk::drawing::text( x, y, c, sdk::drawing::c_fonts::d_font, notify->text.c_str( ), false );
+					sdk::drawing::text( x, y, c, sdk::drawing::c_fonts::verdana, notify->text.c_str( ), false );
 					y += size;
 				}
 			}

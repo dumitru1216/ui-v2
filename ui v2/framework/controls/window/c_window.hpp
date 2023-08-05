@@ -7,7 +7,7 @@
 namespace gui {
 	namespace window {
 		bool begin_window( sdk::c_str name );
-		bool begin_tab( int icon, sdk::c_str name );
+		bool begin_tab( sdk::c_str name );
 
 		sdk::c_function end_window( );
 

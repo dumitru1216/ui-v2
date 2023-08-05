@@ -74,6 +74,27 @@ namespace sdk {
 				return temp;
 			}
 
+			/* vec + vec */
+			vec2_t& operator+=( const vec2_t& v ) {
+				this->x += v.x; this->y += v.y;
+				return *this;
+			}
+
+			vec2_t& operator+=( float fl ) {
+				this->x += fl;
+				this->y += fl;
+
+				return *this;
+			}
+
+			vec2_t& operator+( vec2_t v ) {
+				vec2_t temp;
+				temp.x = this->x + v.x;
+				temp.y = this->y + v.y;
+
+				return temp;
+			}
+
 			/* parameters */
 			float x;
 			float y;

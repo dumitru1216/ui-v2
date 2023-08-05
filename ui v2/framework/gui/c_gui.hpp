@@ -71,6 +71,8 @@ namespace gui {
 		sdk::math::vec2_t pos = { 100, 100 };
 		sdk::math::vec2_t size = { 568, 635 };
 
+		sdk::color::col_t accent{ 235, 103, 52 };
+
 		sdk::math::vec2_t next_group_pos;
 		sdk::math::vec2_t parent_pos;
 		sdk::math::vec2_t parent_size;

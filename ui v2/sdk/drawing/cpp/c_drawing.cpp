@@ -1,4 +1,10 @@
 #include "../c_drawing.hpp"
+#include "../../fonts/segoeuib.h"
+#include "../../fonts/segoeui.h"
+#include "../../fonts/icons.h"
+#include "../../fonts/tahoma.h"
+#include "../../fonts/acta.h"
+#include "../../fonts/arrowmod.h"
 
 /* init */ sdk::view_port::c_view_port* sdk::view_port::view_port;
 
@@ -6,8 +12,17 @@
 sdk::c_function sdk::drawing::init_fonts( ) {
 	ImGuiIO& io = ImGui::GetIO( );
 	ImFontConfig cfg;
+	cfg.FontDataOwnedByAtlas = false;
+
+
+	io.Fonts->AddFontFromFileTTF( "c:/windows/fonts/smallest_pixel-7.ttf", 10.f, &cfg, io.Fonts->GetGlyphRangesCyrillic( ) );
+	io.Fonts->AddFontFromFileTTF( "c:/windows/fonts/verdana.ttf", 11.f, &cfg, io.Fonts->GetGlyphRangesCyrillic( ) );
+	io.Fonts->AddFontFromFileTTF( "c:/windows/fonts/verdanab.ttf", 11.f, &cfg, io.Fonts->GetGlyphRangesCyrillic( ) );
+	io.Fonts->AddFontFromMemoryTTF( fs_tahoma_8px_ttf, fs_tahoma_8px_ttf_len, 12.0f, &cfg, io.Fonts->GetGlyphRangesCyrillic( ) );
+	io.Fonts->AddFontFromMemoryCompressedTTF( MenuIcons_compressed_data, MenuIcons_compressed_size, 21.0f, &cfg, io.Fonts->GetGlyphRangesJapanese( ) );
 
 	io.Fonts->AddFontDefault( );
+
 	ImGuiFreeType::BuildFontAtlas( io.Fonts, ImGuiFreeTypeBuilderFlags_Bitmap );
 }
 
