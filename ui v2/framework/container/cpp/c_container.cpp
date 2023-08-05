@@ -5,7 +5,11 @@ sdk::c_function gui::containter::impl::draw_menu( ) {
 	if ( gui::window::begin_window( "ui" ) || gui::ctx->setup ) {
 		if ( gui::window::begin_tab( "i" ) || gui::ctx->setup ) {
 			gui::child::begin_child( "aimbot", sdk::math::vec2_t( 50, 60 ) );  {
-
+				static bool salut = false;
+				static bool salut2 = false;
+				gui::controls::checkbox( "Enable", &salut, false, "This enables aimbot" );
+				gui::controls::checkbox( "Auto fire", &salut2, false );
+				
 			}
 			gui::child::end_child( );
 			gui::child::begin_child( "aimbot2", sdk::math::vec2_t( 50, 20 ) );

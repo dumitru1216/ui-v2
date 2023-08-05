@@ -291,7 +291,7 @@ bool gui::window::begin_window( sdk::c_str name ) {
                             auto integr_size{ tooltip_size.x + 10 };
 
                             sdk::drawing::rect_filled(
-                                tab_pos.x + add_to_tab - 5, tab_pos.y + 30, integr_size, 27, menu_colors[ 0 ].modify_alpha( 255 * tool_tip_timer.at( i ) ), 3
+                                tab_pos.x + add_to_tab - 5, tab_pos.y + 30, integr_size, 27, sdk::color::col_t( 16, 16, 16 ).modify_alpha( 255 * tool_tip_timer.at( i ) ), 3
                             );
                             sdk::drawing::rect(
                                 tab_pos.x + add_to_tab - 5, tab_pos.y + 30, integr_size, 27, menu_colors[ 1 ].modify_alpha( 255 * tool_tip_timer.at( i ) ), 3
