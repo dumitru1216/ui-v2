@@ -131,10 +131,12 @@ namespace gui {
 		float animation_interval( float interval = 0.035f );
 		float map_number( float input, float input_min, float input_max, float output_min, float output_max );
 
-		sdk::c_str_vec split_str( const sdk::c_str& str, char separator );
+		sdk::c_str_vec split_str( const sdk::c_str& str, const char* separator );
 		sdk::c_size hash( const sdk::c_str& name );
 	}
 }
 
 /* here down we are going to do the includes */
 #include "../controls/window/c_window.hpp"
+#include "../controls/child/c_child.hpp"
+#include "../controls/checkbox/c_checkbox.hpp"

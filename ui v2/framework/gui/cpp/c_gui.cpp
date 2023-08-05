@@ -31,7 +31,7 @@ float gui::helpers::map_number( float input, float input_min, float input_max, f
 	return ( input - input_min ) / ( input_max - input_min ) * ( output_max - output_min ) + output_min;
 }
 
-sdk::c_str_vec gui::helpers::split_str( const sdk::c_str& str, char separator ) {
+sdk::c_str_vec gui::helpers::split_str( const sdk::c_str& str, const char* separator ) {
 	std::vector<sdk::c_str> output;
 	sdk::c_str::size_type prev_pos = 0, pos = 0;
 

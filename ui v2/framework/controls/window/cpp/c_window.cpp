@@ -100,7 +100,7 @@ bool gui::window::begin_window( sdk::c_str name ) {
     static sdk::color::col_t menu_colors[ 3 ] = {
         sdk::color::col_t( 0, 0, 0 ), // outline 1
         sdk::color::col_t( 28, 28, 28 ), // outline 2
-        sdk::color::col_t( 22, 22, 22 ) // backround
+        sdk::color::col_t( 20, 20, 20 ) // backround
     };
 
     /* render menu */
@@ -259,12 +259,12 @@ bool gui::window::begin_window( sdk::c_str name ) {
                     int half_width = 16 * hover_animation.at( i );
 
                     sdk::drawing::rect_filled(
-                        middle_x - half_width, tab_pos.y - 6, half_width + 1, 3,
+                        middle_x - half_width, tab_pos.y - 6, half_width + 1, 6,
                         ctx->accent.modify_alpha( 150 * ctx->animation ), 3
                     );
 
                     sdk::drawing::rect_filled(
-                        middle_x, tab_pos.y - 6, half_width, 3,
+                        middle_x, tab_pos.y - 6, half_width, 6,
                         ctx->accent.modify_alpha( 150 * ctx->animation ), 3
                     );
 
@@ -332,7 +332,7 @@ bool gui::window::begin_window( sdk::c_str name ) {
 
     ctx->tabs.clear( );
     gui::helpers::push_cusor_pos( sdk::math::vec2_t(
-        104, 24
+        20, 60
     ) );
 
     return true;
