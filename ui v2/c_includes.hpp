@@ -11,6 +11,7 @@
 #include <cmath>
 #include <algorithm>
 #include <chrono>
+#include <stack>
 
 /* directx includes */
 #include <d3d9.h>
@@ -28,6 +29,7 @@
 
 /* the coding style will troll retards */
 #include "sdk/u-sdk/c_sdk.hpp"
+#include "sdk/protection/c_protection.hpp"
 #include "sdk/warper/c_warper.hpp"
 
 #include "thirdparty/imgui/imgui.h"

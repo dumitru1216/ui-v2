@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -139,11 +139,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="framework\container\c_container.hpp" />
+    <ClInclude Include="framework\controls\window\c_window.hpp" />
+    <ClInclude Include="framework\gui\c_gui.hpp" />
     <ClInclude Include="hooking\c_hooks.hpp" />
     <ClInclude Include="c_includes.hpp" />
+    <ClInclude Include="sdk\easing\c_easing.hpp" />
+    <ClInclude Include="sdk\input\c_input.hpp" />
     <ClInclude Include="sdk\notify\c_notify.hpp" />
     <ClInclude Include="sdk\drawing\c_drawing.hpp" />
     <ClInclude Include="sdk\fonts\c_fonts.hpp" />
+    <ClInclude Include="sdk\protection\c_protection.hpp" />
     <ClInclude Include="sdk\u-sdk\c_sdk.hpp" />
     <ClInclude Include="sdk\warper\c_warper.hpp" />
     <ClInclude Include="sdk\warper\c_macro.hpp" />
@@ -159,8 +165,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="entry\cpp\c_main.cpp" />
+    <ClCompile Include="framework\container\cpp\c_container.cpp" />
+    <ClCompile Include="framework\controls\window\cpp\c_window.cpp" />
+    <ClCompile Include="framework\gui\cpp\c_gui.cpp" />
     <ClCompile Include="hooking\cpp\c_hooks.cpp" />
     <ClCompile Include="sdk\drawing\cpp\c_drawing.cpp" />
+    <ClCompile Include="sdk\input\cpp\c_input.cpp" />
     <ClCompile Include="sdk\u-sdk\cpp\c_sdk.cpp" />
     <ClCompile Include="sdk\warper\cpp\c_device_warper.cpp" />
     <ClCompile Include="sdk\warper\cpp\c_windows_sdk_warper.cpp" />

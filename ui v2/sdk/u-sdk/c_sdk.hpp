@@ -81,6 +81,7 @@ namespace sdk {
 	}
 
 	/* color */
+	inline float alpha_mod = -1.f;
 	namespace color {
 		struct col_t {
 			col_t( ) : r( 255 ), g( 255 ), b( 255 ), a( 255 ) { } /* default white */
@@ -136,5 +137,19 @@ namespace sdk {
 
 			float r, g, b, a;
 		};
+	}
+
+	namespace g {
+		inline bool c_menu_open = false;
+	}
+
+	namespace interfaces {
+		class c_global_vars {
+		public:
+			int c_frame_time{};
+		};
+
+		/* warpers */
+		inline const auto c_globals = std::make_unique< c_global_vars >( );
 	}
 }

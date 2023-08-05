@@ -25,6 +25,9 @@ namespace sdk {
 				notify_text.push_back(
 					std::make_shared< c_notify_text >( text, c, time )
 				);
+
+				/* log to console */
+				std::cout << text << std::endl;
 			}
 
 			__forceinline c_function think( ) {
@@ -34,7 +37,7 @@ namespace sdk {
 
 				for ( c_size i{ }; i < notify_text.size( ); i++ ) {
 					auto notify = notify_text[ i ];
-					notify->time -= 0.02f;
+					notify->time -= 0.02;
 
 					if ( notify->time <= 0.f ) {
 						notify_text.erase( notify_text.begin( ) + i );

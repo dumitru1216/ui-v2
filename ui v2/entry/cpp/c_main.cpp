@@ -1,9 +1,15 @@
 #include "../../c_includes.hpp"
 #include "../../sdk/notify/c_notify.hpp"
+#include "../../sdk/input/c_input.hpp"
+#include "../../framework/container/c_container.hpp"
+#include "../../framework/gui/c_gui.hpp"
 
 int main( sdk::c_instance instance, sdk::c_instance prev_instance,
 		  LPWSTR cmd_line, int cmd_show ) {
 	sdk::c_warper->alloc_console( );
+
+	/* init */
+	sdk::interfaces::c_globals->c_frame_time = 0.02;
 
 	/* name */
 	sdk::c_lstr lpz_class{ "ui-v2" };
@@ -41,6 +47,17 @@ int main( sdk::c_instance instance, sdk::c_instance prev_instance,
 			return 0;
 	}
 
+	/* initialize input system */
+	{
+		D3DDEVICE_CREATION_PARAMETERS params;
+		device->GetCreationParameters( &params );
+		window = params.hFocusWindow;
+
+		if ( !sdk::input::input_sys::get( )->initialize( device ) ) {
+			return false;
+		}
+	}
+
 	/* window updating */
 	sdk::c_warper->show_window( window, SW_SHOWDEFAULT );
 	sdk::c_warper->update_window( window );
@@ -65,7 +82,25 @@ int main( sdk::c_instance instance, sdk::c_instance prev_instance,
 
 		sdk::c_warper->warp_frame( );
 		sdk::c_warper->begin_frame( ); {
+			/* initialize ui */
+			sdk::input::update( );
+
+			if ( sdk::input::input_sys::get( )->was_key_pressed( VK_INSERT ) ) {
+				sdk::g::c_menu_open = !sdk::g::c_menu_open;
+				sdk::c_notify->log( "state changed" );
+			}
+
+			/* setup */
+			gui::ctx->animation = sdk::g::c_menu_open ? ( gui::ctx->animation + ( 1.0f / 0.2f ) * 0.02 ) :
+				( ( gui::ctx->animation - ( 1.0f / 0.2f ) * 0.02 ) );
+
+			gui::ctx->animation = std::clamp<float>( gui::ctx->animation, 0.f, 1.0f );
+
+			if ( !sdk::g::c_menu_open )
+				gui::ctx->colorpicker_info.hashed_id = 0;
+
 			/* run there */
+			gui::c_container->draw_menu( );
 
 			/* think log drawing */
 			sdk::c_notify->think( );
