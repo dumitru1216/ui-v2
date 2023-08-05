@@ -31,7 +31,7 @@ void gui::child::begin_child( const sdk::c_str& name, const sdk::math::vec2_t& s
 	float height_percent = size.y / 100.f;
 
 	int width_available = ctx->size.x - 150;
-	int height_available = ctx->size.y - 40;
+	int height_available = ctx->size.y - 50;
 
 	if ( cursor_pos.x == 50 && width_percent == 1.0f )
 		width_available += 20;
@@ -123,6 +123,14 @@ void gui::child::begin_child( const sdk::c_str& name, const sdk::math::vec2_t& s
 			draw_pos.x, draw_pos.y, group_size.x, group_size.y, menu_colors[ 1 ].modify_alpha( 255 * ctx->animation ), 3
 		);
 
+		/* yeah i know, thats retarded */
+		sdk::drawing::text(
+			draw_pos.x, draw_pos.y - 20, sdk::color::col_t( ).modify_alpha( ( sdk::input::input_sys::get( )->is_in_box( draw_pos, group_size ) ? 255 : 150 ) * hover_animation2.at( i ) ), sdk::drawing::c_fonts::verdana, name.c_str( )
+		);
+		sdk::drawing::text(
+			draw_pos.x, draw_pos.y - 20, sdk::color::col_t( ).modify_alpha( 150 * ctx->animation ), sdk::drawing::c_fonts::verdana, name.c_str( )
+		);
+
 		/* store */
 		gp = draw_pos;
 		gs = group_size;
@@ -133,7 +141,7 @@ void gui::child::begin_child( const sdk::c_str& name, const sdk::math::vec2_t& s
 		gui::helpers::push_cusor_pos( cursor_pos + sdk::math::vec2_t( 22, 23 + scrolling[ id ] ) );
 
 		ctx->parent = "root." + ctx->tabs[ ctx->active_tab ] + "." + name;
-		ctx->next_group_pos = cursor_pos + sdk::math::vec2_t( 0, group_size.y + 20 );
+		ctx->next_group_pos = cursor_pos + sdk::math::vec2_t( 0, group_size.y + 30 );
 
 		ctx->parent_pos = draw_pos;
 		ctx->parent_size = group_size;

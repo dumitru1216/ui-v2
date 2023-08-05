@@ -8,7 +8,7 @@ sdk::c_function gui::containter::impl::draw_menu( ) {
 
 			}
 			gui::child::end_child( );
-			gui::child::begin_child( "aimbot2", sdk::math::vec2_t( 50, 30 ) );
+			gui::child::begin_child( "aimbot2", sdk::math::vec2_t( 50, 20 ) );
 			{
 
 			}
