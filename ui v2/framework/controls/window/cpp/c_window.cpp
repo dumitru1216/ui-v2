@@ -12,6 +12,9 @@ std::map<int, float> select_timer;
 std::map<int, float> hover_animation;
 std::map<int, float> hover_timer;
 
+std::map<int, float> tool_tip_animation;
+std::map<int, float> tool_tip_timer;
+
 /* reset window */
 sdk::c_function gui::window::impl::reset( ) {
     if ( gui::ctx->focused_id != 0 )
@@ -138,6 +141,9 @@ bool gui::window::begin_window( sdk::c_str name ) {
 
             select_animation.insert( { i, 0.f } );
             select_timer.insert( { i, 0.f } );
+
+            tool_tip_animation.insert( { i, 0.f } );
+            tool_tip_timer.insert( { i, 0.f } );
         }
 
         if ( sdk::input::input_sys::get( )->is_in_box( tab_pos, sdk::math::vec2_t( 20, 20 ) ) ) {
@@ -148,6 +154,26 @@ bool gui::window::begin_window( sdk::c_str name ) {
 
             if ( hover_animation.at( i ) >= 0.999998 ) {
                 hover_animation.at( i ) = 1.f;
+            }
+
+            if ( hover_animation.at( i ) == 1.f ) {
+                tool_tip_timer.at( i ) += ( 1.0f / 0.2f ) * 0.003f;
+                tool_tip_timer.at( i ) = std::clamp<float>( tool_tip_timer.at( i ), 0.f, 1.f );
+
+                tool_tip_animation.at( i ) = sdk::easing::out_circ( tool_tip_timer.at( i ) );
+
+                if ( tool_tip_animation.at( i ) >= 0.999998 ) {
+                    tool_tip_animation.at( i ) = 1.f;
+                }
+            } else {
+                tool_tip_timer.at( i ) -= ( 1.0f / 0.2f ) * 0.003f;
+                tool_tip_timer.at( i ) = std::clamp<float>( tool_tip_timer.at( i ), 0.f, 1.f );
+
+                tool_tip_animation.at( i ) = sdk::easing::out_circ( tool_tip_timer.at( i ) );
+
+                if ( tool_tip_animation.at( i ) <= 0.05f ) {
+                    tool_tip_animation.at( i ) = 0.f;
+                }
             }
         } else {
             if ( i != ctx->active_tab ) {
@@ -241,6 +267,41 @@ bool gui::window::begin_window( sdk::c_str name ) {
                         middle_x, tab_pos.y - 6, half_width, 3,
                         ctx->accent.modify_alpha( 150 * ctx->animation ), 3
                     );
+
+                    /* tool tip */
+                    {
+                        if ( hover_animation.at( i ) == 1.f ) {
+                            sdk::c_str tooltip_text{};
+
+                            /* hardcodenz */
+                            if ( ctx->tabs[ i ] == "i" ) {
+                                tooltip_text = "ragebot";
+                            } else if ( ctx->tabs[ i ] == "k" ) {
+                                tooltip_text = "anti-hit";
+                            } else if ( ctx->tabs[ i ] == "3" ) {
+                                tooltip_text = "visuals";
+                            } else if ( ctx->tabs[ i ] == "5" ) {
+                                tooltip_text = "misc";
+                            } else if ( ctx->tabs[ i ] == "6" ) {
+                                tooltip_text = "profile";
+                            }
+
+                            /* some hardcodenz from dutu */
+                            auto tooltip_size = sdk::drawing::get_text_size( tooltip_text.c_str( ), sdk::drawing::c_fonts::verdana );
+                            auto integr_size{ tooltip_size.x + 10 };
+
+                            sdk::drawing::rect_filled(
+                                tab_pos.x + add_to_tab - 5, tab_pos.y + 30, integr_size, 27, menu_colors[ 0 ].modify_alpha( 255 * tool_tip_timer.at( i ) ), 3
+                            );
+                            sdk::drawing::rect(
+                                tab_pos.x + add_to_tab - 5, tab_pos.y + 30, integr_size, 27, menu_colors[ 1 ].modify_alpha( 255 * tool_tip_timer.at( i ) ), 3
+                            );
+
+                            sdk::drawing::text(
+                                tab_pos.x + add_to_tab, tab_pos.y + 35, sdk::color::col_t( 150, 150, 150 ).modify_alpha( 255 * tool_tip_timer.at( i ) ), sdk::drawing::c_fonts::verdana, tooltip_text.c_str( )
+                            );
+                        }
+                    }
                 }
 
                 sdk::drawing::rect_filled(
