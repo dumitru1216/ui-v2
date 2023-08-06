@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework\container\c_container.hpp" />
+    <ClInclude Include="framework\controls\button\c_button.hpp" />
     <ClInclude Include="framework\controls\checkbox\c_checkbox.hpp" />
     <ClInclude Include="framework\controls\child\c_child.hpp" />
     <ClInclude Include="framework\controls\slider\c_slider.hpp" />
@@ -177,6 +178,7 @@
   <ItemGroup>
     <ClCompile Include="entry\cpp\c_main.cpp" />
     <ClCompile Include="framework\container\cpp\c_container.cpp" />
+    <ClCompile Include="framework\controls\button\cpp\c_button.cpp" />
     <ClCompile Include="framework\controls\checkbox\cpp\c_checkbox.cpp" />
     <ClCompile Include="framework\controls\child\cpp\c_child.cpp" />
     <ClCompile Include="framework\controls\slider\cpp\c_slider.cpp" />

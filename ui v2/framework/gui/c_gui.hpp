@@ -142,3 +142,4 @@ namespace gui {
 #include "../controls/child/c_child.hpp"
 #include "../controls/checkbox/c_checkbox.hpp"
 #include "../controls/slider/c_slider.hpp"
+#include "../controls/button/c_button.hpp"

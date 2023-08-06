@@ -8,6 +8,16 @@
 
 /* init */ sdk::view_port::c_view_port* sdk::view_port::view_port;
 
+ImU32 lerp_color( ImU32 col1, ImU32 col2, float t ) {
+	ImVec4 c1 = ImGui::ColorConvertU32ToFloat4( col1 );
+	ImVec4 c2 = ImGui::ColorConvertU32ToFloat4( col2 );
+	ImVec4 lerped = ImVec4( c1.x + t * ( c2.x - c1.x ),
+							c1.y + t * ( c2.y - c1.y ),
+							c1.z + t * ( c2.z - c1.z ),
+							c1.w + t * ( c2.w - c1.w ) );
+	return ImGui::ColorConvertFloat4ToU32( lerped );
+}
+
 /* drawing */
 sdk::c_function sdk::drawing::init_fonts( ) {
 	ImGuiIO& io = ImGui::GetIO( );
@@ -28,6 +38,18 @@ sdk::c_function sdk::drawing::init_fonts( ) {
 
 sdk::c_function sdk::drawing::rect_filled( int x, int y, int w, int h, color::col_t c, int rounding ) {
 	draw_list->AddRectFilled( im_vec_2( x, y ), im_vec_2( x + w, y + h ), c.convert( ), rounding );
+}
+
+sdk::c_function sdk::drawing::filled_circle( math::vec2_t center, float radius, color::col_t c ) {
+	draw_list->AddCircleFilled( ImVec2( center.x, center.y ), radius, c.convert( ) );
+}
+
+sdk::c_function sdk::drawing::gradient_circle_filled( sdk::math::vec2_t c, int radius, sdk::color::col_t inner_color, sdk::color::col_t outer_color ) {
+	for ( int i = 0; i <= radius; ++i ) {
+		float t = static_cast< float >( i ) / radius;
+		ImU32 color = ImGui::GetColorU32( lerp_color( inner_color.convert( ), outer_color.convert( ), t ) );
+		draw_list->AddCircleFilled( ImVec2( c.x, c.y ), static_cast< float >( i ), color );
+	}
 }
 
 sdk::c_function sdk::drawing::rect( int x, int y, int w, int h, color::col_t c, int rounding ) {

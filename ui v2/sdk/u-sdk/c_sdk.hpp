@@ -95,6 +95,15 @@ namespace sdk {
 				return temp;
 			}
 
+			/* > */
+			bool operator<( const vec2_t& in ) const {
+				return ( x < in.x && y < in.y );
+			}
+
+			bool operator>( const vec2_t& in ) const {
+				return ( x > in.x && y > in.y );
+			}
+
 			/* parameters */
 			float x;
 			float y;

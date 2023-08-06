@@ -1,6 +1,10 @@
 #include "../c_container.hpp"
 #include "../../gui/c_gui.hpp"
 
+void save_window( ) {
+
+}
+
 sdk::c_function gui::containter::impl::draw_menu( ) {
 	static bool salut = false;
 	static bool salut2 = false;
@@ -15,6 +19,9 @@ sdk::c_function gui::containter::impl::draw_menu( ) {
 				gui::controls::checkbox( "Enable", &salut, "This enables aimbot" );
 				gui::controls::checkbox( "Auto fire", &salut2 );
 				gui::controls::slider( "Hitchance", &sl, 0, 100 );
+				gui::controls::button( "Save", [ & ]( ) {
+					save_window( );
+				} );
 			}
 			gui::child::end_child( );
 			gui::child::begin_child( "Hitbox", sdk::math::vec2_t( 50, 20 ) );

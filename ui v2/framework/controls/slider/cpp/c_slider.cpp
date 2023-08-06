@@ -176,11 +176,23 @@ bool gui::controls::slider( const sdk::c_str& name, int* var_name, int min, int 
 		}
 	}
 	
-	sdk::drawing::rect( draw_pos.x - 1, draw_pos.y - 1, draw_size.x + 2, draw_size.y + 2 + 1, menu_colors[ 0 ], 2 );
-	sdk::drawing::rect( draw_pos.x, draw_pos.y, draw_size.x, draw_size.y + 1, menu_colors[ 1 ], 2 );
 
-	sdk::drawing::rect_filled( draw_pos.x + 1, draw_pos.y + 1, draw_size.x - 2, draw_size.y + 1 - 2, menu_colors[ 2 ], 2 );
-	
+
+	sdk::drawing::rect_filled( draw_pos.x + 1, draw_pos.y + 1, draw_size.x - 2, draw_size.y + 1 - 2, menu_colors[ 2 ].modify_alpha( 255 * ctx->animation ), 2 );
+
+	/* flashlight */
+	draw_list->PushClipRect( { draw_pos.x, draw_pos.y }, { draw_pos.x + draw_size.x, draw_pos.y + draw_size.y }, true );
+
+	sdk::math::vec2_t mouse_pos = sdk::input::input_sys::get( )->get_mouse_position( );
+	sdk::drawing::gradient_circle_filled(
+		mouse_pos, 60, sdk::color::col_t( 66, 66, 66, 25 ), sdk::color::col_t( 66, 66, 66, 0 )
+	);
+
+	draw_list->PopClipRect( );
+
+	sdk::drawing::rect( draw_pos.x - 1, draw_pos.y - 1, draw_size.x + 2, draw_size.y + 2 + 1, menu_colors[ 0 ].modify_alpha( 255 * ctx->animation ), 2 );
+	sdk::drawing::rect( draw_pos.x, draw_pos.y, draw_size.x, draw_size.y + 1, menu_colors[ 1 ].modify_alpha( 255 * ctx->animation ), 2 );
+
 	if ( *var_name == 0 ) {
 		sdk::drawing::text(
 			draw_pos.x, draw_pos.y - 19, sdk::color::col_t( ).modify_alpha( 80 * hover_animation_s.at( i ) ), sdk::drawing::c_fonts::verdana, name.c_str( )
@@ -206,7 +218,7 @@ bool gui::controls::slider( const sdk::c_str& name, int* var_name, int min, int 
 			std::clamp( ( int )sdk::math::vec2_t( sdk::input::input_sys::get( )->get_mouse_position( ) - draw_pos ).x, 0, ( int )draw_size.x ), 0, draw_size.x, min, max ), min, max
 		);
 
-		sdk::drawing::rect_filled( draw_pos.x + 1, draw_pos.y + 1, gui::helpers::map_number( preview_value, min, max, 0, draw_size.x ), draw_size.y + 1 - 2, ctx->accent.modify_alpha( 100 ), 2 );
+		sdk::drawing::rect_filled( draw_pos.x + 1, draw_pos.y + 1, gui::helpers::map_number( preview_value, min, max, 0, draw_size.x ), draw_size.y + 1 - 2, ctx->accent.modify_alpha( 100 * ctx->animation ), 2 );
 	}
 	else {
 		preview_launch = false;
@@ -214,7 +226,7 @@ bool gui::controls::slider( const sdk::c_str& name, int* var_name, int min, int 
 
 	if ( hovered ) {
 		sdk::drawing::text(
-			draw_pos.x + width - 5, draw_pos.y + 5, sdk::color::col_t().modify_alpha( 150 * ctx->animation ), sdk::drawing::c_fonts::verdanab, buffer
+			draw_pos.x + sdk::drawing::get_text_size(name.c_str( ), sdk::drawing::c_fonts::verdanab ).x + 5, draw_pos.y - 19, sdk::color::col_t( ).modify_alpha( 150 * ctx->animation ), sdk::drawing::c_fonts::verdanab, buffer
 		);
 	}
 

@@ -97,10 +97,6 @@ bool gui::controls::checkbox( const sdk::c_str& name, bool* value, const sdk::c_
 		sdk::color::col_t( 37, 37, 37 ) // backround
 	};
 
-	sdk::drawing::rect(
-		draw_pos.x - 1, draw_pos.y - 1, draw_size.x + 2, draw_size.y + 2, menu_colors[ 0 ], 2
-	);
-
 	bool hovered = sdk::input::input_sys::get( )->is_in_box( draw_pos, draw_size + sdk::math::vec2_t( 50, 0 ) - sdk::math::vec2_t( 1, 1 ) ) &&
 		sdk::input::input_sys::get( )->is_in_box( ctx->parent_pos, ctx->parent_size );
 
@@ -124,6 +120,20 @@ bool gui::controls::checkbox( const sdk::c_str& name, bool* value, const sdk::c_
 		draw_pos.x, draw_pos.y, draw_size.x, draw_size.y, menu_colors[ 2 ], 3
 	);
 
+	/* flashlight */
+	draw_list->PushClipRect( { draw_pos.x, draw_pos.y }, { draw_pos.x + draw_size.x, draw_pos.y + draw_size.y }, true );
+
+	sdk::math::vec2_t mouse_pos = sdk::input::input_sys::get( )->get_mouse_position( );
+	sdk::drawing::gradient_circle_filled(
+		mouse_pos, 60, sdk::color::col_t( 66, 66, 66, 25 ), sdk::color::col_t( 66, 66, 66, 0 )
+	);
+
+	draw_list->PopClipRect( );
+
+	sdk::drawing::rect(
+		draw_pos.x - 1, draw_pos.y - 1, draw_size.x + 2, draw_size.y + 2, menu_colors[ 0 ], 2
+	);
+
 	sdk::drawing::rect_filled(
 		draw_pos.x + 1, draw_pos.y + 1, draw_size.x - 2, draw_size.y - 2, ctx->accent.modify_alpha( 255 * select_animation_check.at( i ) ), 2
 	);
@@ -141,6 +151,7 @@ bool gui::controls::checkbox( const sdk::c_str& name, bool* value, const sdk::c_
 			draw_pos.x + 20, draw_pos.y - 2, sdk::color::col_t( ).modify_alpha( 80 * hover_animation_check.at( i ) ), sdk::drawing::c_fonts::verdana, name.c_str( )
 		);
 	}
+
 
 	sdk::drawing::text(
 		draw_pos.x + 20, draw_pos.y - 2, sdk::color::col_t( ).modify_alpha( ( *value ? 225 : 100 ) * select_animation_check.at( i ) ), sdk::drawing::c_fonts::verdana, name.c_str( )

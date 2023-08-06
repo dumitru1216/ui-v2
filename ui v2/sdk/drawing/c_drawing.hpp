@@ -17,6 +17,8 @@ namespace sdk {
 
 		c_function rect_filled( int x, int y, int w, int h, color::col_t c, int rounding = 0.f );
 		c_function image( int x, int y, int w, int h, ImTextureID user_texture_id );
+		c_function filled_circle( math::vec2_t center, float radius, color::col_t c );
+		c_function gradient_circle_filled( sdk::math::vec2_t c, int radius, sdk::color::col_t inner_color, sdk::color::col_t outer_color );
 		c_function rect( int x, int y, int w, int h, color::col_t c, int rounding = 0.f );
 		c_function gradient_vertical( int x, int y, int w, int h, color::col_t c, color::col_t c1 );
 		c_function gradient_horizontal( int x, int y, int w, int h, color::col_t c, color::col_t c1 );
