@@ -12,13 +12,11 @@ std::map<int, float> hover_timer_check;
 std::map<int, float> tool_tip_animation_check;
 std::map<int, float> tool_tip_timer_check;
 
-bool gui::controls::checkbox( const sdk::c_str& name, bool* value, bool unsecure, const sdk::c_str& tool_tip )
+bool gui::controls::checkbox( const sdk::c_str& name, bool* value, const sdk::c_str& tool_tip )
 {
 	sdk::math::vec2_t cursor_pos = gui::helpers::pop_cursor_pos( );
 	sdk::math::vec2_t draw_pos = ctx->pos + cursor_pos;
 	sdk::math::vec2_t draw_size = sdk::math::vec2_t( 11, 11 );
-
-	//sdk::c_size id = gui::helpers::hash( name );
 
 	/* i */
 	auto i = gui::helpers::hash( name );
@@ -134,13 +132,15 @@ bool gui::controls::checkbox( const sdk::c_str& name, bool* value, bool unsecure
 		draw_pos.x, draw_pos.y, draw_size.x, draw_size.y, menu_colors[ 1 ], 2
 	);
 
-	sdk::drawing::rect(
-		draw_pos.x, draw_pos.y, draw_size.x, draw_size.y, ctx->accent.modify_alpha( 80 * hover_animation_check.at( i ) ), 2
-	);
-
 	sdk::drawing::text(
 		draw_pos.x + 20, draw_pos.y - 2, sdk::color::col_t( ).modify_alpha( 100 ), sdk::drawing::c_fonts::verdana, name.c_str( )
 	);
+
+	if ( !*value ) {
+		sdk::drawing::text(
+			draw_pos.x + 20, draw_pos.y - 2, sdk::color::col_t( ).modify_alpha( 80 * hover_animation_check.at( i ) ), sdk::drawing::c_fonts::verdana, name.c_str( )
+		);
+	}
 
 	sdk::drawing::text(
 		draw_pos.x + 20, draw_pos.y - 2, sdk::color::col_t( ).modify_alpha( ( *value ? 225 : 100 ) * select_animation_check.at( i ) ), sdk::drawing::c_fonts::verdana, name.c_str( )

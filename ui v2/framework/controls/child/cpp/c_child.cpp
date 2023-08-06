@@ -30,7 +30,7 @@ void gui::child::begin_child( const sdk::c_str& name, const sdk::math::vec2_t& s
 	float width_percent = size.x / 100.f;
 	float height_percent = size.y / 100.f;
 
-	int width_available = ctx->size.x - 150;
+	int width_available = ctx->size.x - 100;
 	int height_available = ctx->size.y - 50;
 
 	if ( cursor_pos.x == 50 && width_percent == 1.0f )
@@ -139,7 +139,7 @@ void gui::child::begin_child( const sdk::c_str& name, const sdk::math::vec2_t& s
 		//draw_list->PushClipRect( { draw_pos.x, draw_pos.y + 5 }, { group_size.x, group_size.y - 7 }, true ); // i guess this works
 		draw_list->PushClipRect( { draw_pos.x, draw_pos.y }, { draw_pos.x + group_size.x, draw_pos.y + group_size.y }, true );
 
-		gui::helpers::push_cusor_pos( cursor_pos + sdk::math::vec2_t( 22, 23 + scrolling[ id ] ) );
+		gui::helpers::push_cusor_pos( cursor_pos + sdk::math::vec2_t( 15, 15 + scrolling[ id ] ) );
 
 		ctx->parent = "root." + ctx->tabs[ ctx->active_tab ] + "." + name;
 		ctx->next_group_pos = cursor_pos + sdk::math::vec2_t( 0, group_size.y + 30 );

@@ -4,6 +4,6 @@
 
 namespace gui {
 	namespace controls {
-		bool checkbox( const sdk::c_str& name, bool* value, bool unsecure = false, const sdk::c_str& tool_tip = "" );
+		bool checkbox( const sdk::c_str& name, bool* value, const sdk::c_str& tool_tip = "" );
 	}
 }

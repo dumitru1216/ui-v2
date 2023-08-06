@@ -142,6 +142,7 @@
     <ClInclude Include="framework\container\c_container.hpp" />
     <ClInclude Include="framework\controls\checkbox\c_checkbox.hpp" />
     <ClInclude Include="framework\controls\child\c_child.hpp" />
+    <ClInclude Include="framework\controls\slider\c_slider.hpp" />
     <ClInclude Include="framework\controls\window\c_window.hpp" />
     <ClInclude Include="framework\gui\c_gui.hpp" />
     <ClInclude Include="hooking\c_hooks.hpp" />
@@ -178,6 +179,7 @@
     <ClCompile Include="framework\container\cpp\c_container.cpp" />
     <ClCompile Include="framework\controls\checkbox\cpp\c_checkbox.cpp" />
     <ClCompile Include="framework\controls\child\cpp\c_child.cpp" />
+    <ClCompile Include="framework\controls\slider\cpp\c_slider.cpp" />
     <ClCompile Include="framework\controls\window\cpp\c_window.cpp" />
     <ClCompile Include="framework\gui\cpp\c_gui.cpp" />
     <ClCompile Include="hooking\cpp\c_hooks.cpp" />

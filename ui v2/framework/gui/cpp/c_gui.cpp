@@ -28,10 +28,26 @@ float gui::helpers::animation_interval( float interval ) {
 }
 
 float gui::helpers::map_number( float input, float input_min, float input_max, float output_min, float output_max ) {
+
 	return ( input - input_min ) / ( input_max - input_min ) * ( output_max - output_min ) + output_min;
 }
 
 sdk::c_str_vec gui::helpers::split_str( const sdk::c_str& str, const char* separator ) {
+	std::vector<sdk::c_str> output;
+	sdk::c_str::size_type prev_pos = 0, pos = 0;
+
+	while ( ( pos = str.find( separator, pos ) ) != sdk::c_str::npos ) {
+		sdk::c_str substring( str.substr( prev_pos, pos - prev_pos ) );
+		output.push_back( substring );
+
+		prev_pos = pos++;
+	}
+
+	output.push_back( str.substr( prev_pos, pos - prev_pos ) );
+	return output;
+}
+
+sdk::c_str_vec gui::helpers::split_str( const sdk::c_str& str, char separator ) {
 	std::vector<sdk::c_str> output;
 	sdk::c_str::size_type prev_pos = 0, pos = 0;
 

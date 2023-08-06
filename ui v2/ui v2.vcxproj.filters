@@ -114,6 +114,9 @@
     <ClInclude Include="framework\controls\checkbox\c_checkbox.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="framework\controls\slider\c_slider.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="entry\cpp\c_main.cpp">
@@ -174,6 +177,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="framework\controls\checkbox\cpp\c_checkbox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\controls\slider\cpp\c_slider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
