@@ -8,13 +8,14 @@ std::map<size_t, std::vector<std::pair<sdk::math::vec2_t, float>>> ripple;
 void gui::controls::button( const sdk::c_str& name, std::function< sdk::c_function( ) > callback, bool use_unique_id ) {
 	sdk::math::vec2_t cursor_pos = gui::helpers::pop_cursor_pos( );
 	sdk::math::vec2_t draw_pos = ctx->pos + cursor_pos;
-	sdk::math::vec2_t draw_size( std::fmin( ( int )ctx->parent_size.x - 90, 270 ), 35 );
+	sdk::math::vec2_t draw_size( std::fmin( ( int )ctx->parent_size.x - 90, 270 ), 28 );
 
 	std::string split_str = gui::helpers::split_str( name, '#' )[ 0 ].data( );
 	std::string unique_id = use_unique_id ? std::string( name ).erase( 0, split_str.length( ) ) : name;
 
 	/* spacing */
-	draw_pos.y += 5;
+	draw_pos.x += 20;
+	//draw_pos.y += 2;
 
 	bool hovered = sdk::input::input_sys::get( )->is_in_box( draw_pos, draw_size ) &&
 		sdk::input::input_sys::get( )->is_in_box( ctx->parent_pos, ctx->parent_size );
@@ -52,7 +53,7 @@ void gui::controls::button( const sdk::c_str& name, std::function< sdk::c_functi
 			if ( ripple.at( gui::helpers::hash( unique_id ) ).at( r ).second != 0.f ) {
 				sdk::drawing::filled_circle(
 					ripple.at( gui::helpers::hash( unique_id ) ).at( r ).first, 120 * ( 1.0f - ripple.at( gui::helpers::hash( unique_id ) ).at( r ).second ),
-					sdk::color::col_t( 66, 66, 66, 50 ).modify_alpha( int( 80 * ( ( ripple.at( gui::helpers::hash( unique_id ) ).at( r ).second ) * ctx->animation ) ) )
+					ctx->accent.modify_alpha( int( 50 * ( ( ripple.at( gui::helpers::hash( unique_id ) ).at( r ).second ) * ctx->animation ) ) )
 				);
 			}
 		}
@@ -81,6 +82,19 @@ void gui::controls::button( const sdk::c_str& name, std::function< sdk::c_functi
 			}
 		}
 	}
+
+	auto to_vector = [ ]( float a, float b )-> sdk::math::vec2_t {
+		return sdk::math::vec2_t( a, b );
+	};
+
+	/* gheto */
+	sdk::math::vec2_t text_size = to_vector( sdk::drawing::get_text_size( gui::helpers::split_str( name, "#" )[ 0 ].data( ), sdk::drawing::c_fonts::verdana ).x,
+											 sdk::drawing::get_text_size( gui::helpers::split_str( name, "#" )[ 0 ].data( ), sdk::drawing::c_fonts::verdana ).y );
+
+	sdk::drawing::text( 
+		/* x */ draw_pos.x + ( ( draw_size.x / 2 ) - ( text_size.x / 2 ) ), /* y */ draw_pos.y + ( ( draw_size.y / 2 ) - ( text_size.y / 2 ) ) - 2.5,
+		sdk::color::col_t( ).modify_alpha( 100 * ctx->animation ), sdk::drawing::c_fonts::verdana, name.c_str( )
+	);
 
 
 	gui::helpers::push_cusor_pos( cursor_pos + sdk::math::vec2_t( 0, draw_size.y + gui::helpers::object_padding( ) ) );

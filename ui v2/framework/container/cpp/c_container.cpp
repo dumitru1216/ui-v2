@@ -9,6 +9,7 @@ sdk::c_function gui::containter::impl::draw_menu( ) {
 	static bool salut = false;
 	static bool salut2 = false;
 	static int sl = 0;
+	static int sl2 = 0;
 	/* you can use the element warper too if you want 
 		this->begin_window ... etc
 	*/
@@ -17,11 +18,12 @@ sdk::c_function gui::containter::impl::draw_menu( ) {
 		if ( gui::window::begin_tab( "i" ) || gui::ctx->setup ) {
 			gui::child::begin_child( "Accuracy", sdk::math::vec2_t( 50, 60 ) );  {
 				gui::controls::checkbox( "Enable", &salut, "This enables aimbot" );
-				gui::controls::checkbox( "Auto fire", &salut2 );
-				gui::controls::slider( "Hitchance", &sl, 0, 100 );
 				gui::controls::button( "Save", [ & ]( ) {
 					save_window( );
 				} );
+				gui::controls::slider( "Hitchance", &sl, 0, 100 );
+
+				gui::controls::dropdown( "Target selection", { "Distance", "Damage", "Smart" }, &sl2 );
 			}
 			gui::child::end_child( );
 			gui::child::begin_child( "Hitbox", sdk::math::vec2_t( 50, 20 ) );

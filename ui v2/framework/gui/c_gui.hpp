@@ -143,3 +143,4 @@ namespace gui {
 #include "../controls/checkbox/c_checkbox.hpp"
 #include "../controls/slider/c_slider.hpp"
 #include "../controls/button/c_button.hpp"
+#include "../controls/dropdown/c_dropdown.hpp"

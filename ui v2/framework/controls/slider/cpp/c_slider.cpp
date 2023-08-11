@@ -24,6 +24,7 @@ bool gui::controls::slider( const sdk::c_str& name, int* var_name, int min, int 
 		sdk::color::col_t( 37, 37, 37 ) // backround
 	};
 
+	draw_pos.x += 20;
 	if ( !gui::helpers::split_str( name, '#' )[ 0 ].empty( ) ) {
 		draw_pos.y += 11;
 	}
