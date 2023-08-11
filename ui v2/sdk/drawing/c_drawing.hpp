@@ -12,6 +12,7 @@ namespace sdk {
 			verdanab,
 			tahoma,
 			icon,
+			arrows,
 			default_font
 		};
 

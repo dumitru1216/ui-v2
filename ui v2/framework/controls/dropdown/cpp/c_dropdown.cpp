@@ -46,6 +46,7 @@ bool gui::controls::dropdown( const sdk::c_str& name, sdk::c_str_vec values, int
 	};
 
 	bool hovered = sdk::input::input_sys::get( )->is_in_box( draw_pos, draw_size ) && sdk::input::input_sys::get( )->is_in_box( ctx->parent_pos, ctx->parent_size );
+
 	auto i = gui::helpers::hash( name );
 	if ( dh_a.find( i ) == dh_a.end( ) ) {
 		dh_a.insert( { i, 0.f } );
@@ -125,6 +126,28 @@ bool gui::controls::dropdown( const sdk::c_str& name, sdk::c_str_vec values, int
 	sdk::drawing::text(
 		draw_pos.x, draw_pos.y - 19, sdk::color::col_t( ).modify_alpha( 100 * dh_a.at( i ) ), sdk::drawing::c_fonts::verdana, name.c_str( )
 	);
+
+	bool focused = ctx->focused_id == gui::helpers::hash( name );
+	sdk::drawing::text(
+		draw_pos.x + draw_size.x - 20, draw_pos.y + 6, sdk::color::col_t( ).modify_alpha( 80 ), sdk::drawing::c_fonts::arrows, focused ? "a" : "d", true
+	);
+
+	sdk::drawing::text(
+		draw_pos.x + draw_size.x - 20, draw_pos.y + 6, sdk::color::col_t( ).modify_alpha( 100 * dh_a.at( i ) ), sdk::drawing::c_fonts::arrows, focused ? "a" : "d", true
+	);
+
+	if ( ctx->focused_id == 0 ) {
+		if ( hovered && sdk::input::input_sys::get( )->was_key_pressed( VK_LBUTTON ) )
+			ctx->focused_id = gui::helpers::hash( name );
+	} else if ( ctx->focused_id == gui::helpers::hash( name ) ) {
+		if ( hovered ) {
+			ctx->dropdown_info.elements = values;
+			ctx->dropdown_info.size = draw_size.x;
+			ctx->dropdown_info.option = var_name;
+			ctx->dropdown_info.pos = draw_pos + sdk::math::vec2_t( 0, draw_size.y + 3 );
+			ctx->dropdown_info.hashed_id = gui::helpers::hash( name );
+		}
+	}
 
 	gui::helpers::push_cusor_pos( cursor_pos + sdk::math::vec2_t( 0, draw_size.y + gui::helpers::object_padding( ) ) );
 	return true; // ??

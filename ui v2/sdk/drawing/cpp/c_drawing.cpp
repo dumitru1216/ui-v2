@@ -30,6 +30,7 @@ sdk::c_function sdk::drawing::init_fonts( ) {
 	io.Fonts->AddFontFromFileTTF( "c:/windows/fonts/verdanab.ttf", 11.f, &cfg, io.Fonts->GetGlyphRangesCyrillic( ) );
 	io.Fonts->AddFontFromMemoryTTF( fs_tahoma_8px_ttf, fs_tahoma_8px_ttf_len, 12.0f, &cfg, io.Fonts->GetGlyphRangesCyrillic( ) );
 	io.Fonts->AddFontFromMemoryCompressedTTF( MenuIcons_compressed_data, MenuIcons_compressed_size, 21.0f, &cfg, io.Fonts->GetGlyphRangesJapanese( ) );
+	io.Fonts->AddFontFromMemoryTTF( arrowmod, sizeof( arrowmod ), 22.0f, &cfg, io.Fonts->GetGlyphRangesJapanese( ) );
 
 	io.Fonts->AddFontDefault( );
 
@@ -73,7 +74,7 @@ sdk::c_function sdk::drawing::text( float x, float y, color::col_t c, int font_i
 	ImGui::PushFont( io.Fonts->Fonts[ font_index ] );
 
 	if ( dropshadow )
-		draw_list->AddText( im_vec_2( x + 1.f, y + 1.f ), color::col_t( 5, 5, 5 ).convert( ), text );
+		draw_list->AddText( im_vec_2( x + 1.f, y + 1.f ), color::col_t( 5, 5, 5 ).modify_alpha( c.a ).convert( ), text );
 
 	// run everything now
 	draw_list->AddText( im_vec_2( x, y ), c.convert( ), text );
