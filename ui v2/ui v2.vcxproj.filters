@@ -123,6 +123,12 @@
     <ClInclude Include="framework\controls\dropdown\c_dropdown.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="framework\controls\multi_dropdown\c_multi_dropdown.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\controls\text_box\c_text_box.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="entry\cpp\c_main.cpp">
@@ -192,6 +198,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="framework\controls\dropdown\cpp\c_dropdown.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\controls\multi_dropdown\cpp\c_multi_dropdown.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\controls\text_box\cpp\c_text_box.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

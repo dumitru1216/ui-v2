@@ -26,6 +26,10 @@
 #pragma warning ( disable : 26495 )
 #pragma warning ( disable : 4244 )
 #pragma warning ( disable : 4715 )
+#pragma warning ( disable : 4996 )
+#pragma warning ( disable : 4305 )
+#pragma warning ( disable : 4834 )
+#pragma warning ( disable : 6031 )
 
 /* the coding style will troll retards */
 #include "sdk/u-sdk/c_sdk.hpp"

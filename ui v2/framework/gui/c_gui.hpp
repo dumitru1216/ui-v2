@@ -144,3 +144,4 @@ namespace gui {
 #include "../controls/slider/c_slider.hpp"
 #include "../controls/button/c_button.hpp"
 #include "../controls/dropdown/c_dropdown.hpp"
+#include "../controls/multi_dropdown/c_multi_dropdown.hpp"

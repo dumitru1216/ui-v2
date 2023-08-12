@@ -150,5 +150,5 @@ bool gui::controls::dropdown( const sdk::c_str& name, sdk::c_str_vec values, int
 	}
 
 	gui::helpers::push_cusor_pos( cursor_pos + sdk::math::vec2_t( 0, draw_size.y + gui::helpers::object_padding( ) ) );
-	return true; // ??
+	return ctx->focused_id == gui::helpers::hash( name ); //true; // ??
 }

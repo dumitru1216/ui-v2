@@ -144,7 +144,9 @@
     <ClInclude Include="framework\controls\checkbox\c_checkbox.hpp" />
     <ClInclude Include="framework\controls\child\c_child.hpp" />
     <ClInclude Include="framework\controls\dropdown\c_dropdown.hpp" />
+    <ClInclude Include="framework\controls\multi_dropdown\c_multi_dropdown.hpp" />
     <ClInclude Include="framework\controls\slider\c_slider.hpp" />
+    <ClInclude Include="framework\controls\text_box\c_text_box.hpp" />
     <ClInclude Include="framework\controls\window\c_window.hpp" />
     <ClInclude Include="framework\gui\c_gui.hpp" />
     <ClInclude Include="hooking\c_hooks.hpp" />
@@ -183,7 +185,9 @@
     <ClCompile Include="framework\controls\checkbox\cpp\c_checkbox.cpp" />
     <ClCompile Include="framework\controls\child\cpp\c_child.cpp" />
     <ClCompile Include="framework\controls\dropdown\cpp\c_dropdown.cpp" />
+    <ClCompile Include="framework\controls\multi_dropdown\cpp\c_multi_dropdown.cpp" />
     <ClCompile Include="framework\controls\slider\cpp\c_slider.cpp" />
+    <ClCompile Include="framework\controls\text_box\cpp\c_text_box.cpp" />
     <ClCompile Include="framework\controls\window\cpp\c_window.cpp" />
     <ClCompile Include="framework\gui\cpp\c_gui.cpp" />
     <ClCompile Include="hooking\cpp\c_hooks.cpp" />

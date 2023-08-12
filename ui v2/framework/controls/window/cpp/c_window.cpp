@@ -386,6 +386,43 @@ void gui::window::end_window( ) {
         sdk::math::vec2_t pos = ctx->multi_dropdown_info.pos;
         int width = ctx->multi_dropdown_info.size;
 
+        static sdk::color::col_t menu_colors[ 4 ] = {
+            sdk::color::col_t( 0, 0, 0 ), // outline 1
+            sdk::color::col_t( 49, 49, 49 ), // outline 2
+            sdk::color::col_t( 37, 37, 37 ), // backround
+            sdk::color::col_t( 42, 42, 42 ) // backround
+        };
+
+        auto draw_pos = pos + sdk::math::vec2_t( 0, 5 );
+        auto draw_size = sdk::math::vec2_t( width, 20 * ctx->multi_dropdown_info.elements.size( ) + 3 );
+
+        sdk::drawing::rect_filled( draw_pos.x + 1, draw_pos.y + 1, draw_size.x - 2, draw_size.y - 2, menu_colors[ 2 ].modify_alpha( 255 * ctx->animation ), 2 );
+        sdk::drawing::rect( draw_pos.x - 1, draw_pos.y - 1, draw_size.x + 2, draw_size.y + 2, menu_colors[ 0 ].modify_alpha( 255 * ctx->animation ), 2 );
+        sdk::drawing::rect( draw_pos.x, draw_pos.y, draw_size.x, draw_size.y, menu_colors[ 1 ].modify_alpha( 255 * ctx->animation ), 2 );
+
+        for ( int i = 0; i < ctx->multi_dropdown_info.elements.size( ); i++ ) {
+            sdk::math::vec2_t option_pos = pos + sdk::math::vec2_t( 0, 20 * i );
+            sdk::math::vec2_t option_size = sdk::math::vec2_t( width, 20 );
+
+            auto draw_pos = pos + sdk::math::vec2_t( 0, 5 );
+            auto draw_size = sdk::math::vec2_t( width, 20 * i );
+
+            sdk::drawing::text(
+                option_pos.x + 10, option_pos.y + 8, ( !*ctx->multi_dropdown_info.elements.at( i ).value ) ? sdk::color::col_t( 200, 200, 200 ) : ctx->accent, sdk::drawing::c_fonts::verdana, ctx->multi_dropdown_info.elements.at( i ).name.c_str( )
+            );
+
+            if ( sdk::input::input_sys::get( )->is_in_box( option_pos, option_size ) ) {
+                if ( sdk::input::input_sys::get( )->was_key_pressed( VK_LBUTTON ) ) {
+                    *ctx->multi_dropdown_info.elements.at( i ).value ^= 1;
+                }
+            }
+        }
+
+        if ( sdk::input::input_sys::get( )->was_key_pressed( VK_LBUTTON ) && 
+             !sdk::input::input_sys::get()->is_in_box( pos, sdk::math::vec2_t( ctx->multi_dropdown_info.size, 20 * ctx->multi_dropdown_info.elements.size( ) ) ) ) {
+            ctx->multi_dropdown_info.hashed_id = 0;
+            ctx->focused_id = 0;
+        }
     }
 
     sdk::alpha_mod = -1.f;
